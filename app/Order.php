@@ -33,6 +33,8 @@ class Order extends Authenticatable {
     public function getDateAttribute($value) {
         if (!empty($value)) {
             $value = date('Y-m-d', strtotime($value));
+        } else {
+            $value = date('Y-m-d');
         }
         return $value;
     }

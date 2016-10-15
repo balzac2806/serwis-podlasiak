@@ -614,6 +614,8 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
                             $scope.order = response.data.order;
                             if (angular.isDefined($scope.order.date)) {
                                 $scope.order.date = new Date($scope.order.date);
+                            } else {
+                                $scope.order.date = new Date();
                             }
                             if ($scope.order.status == 1) {
                                 $scope.order.status = $scope.statuses[0];
