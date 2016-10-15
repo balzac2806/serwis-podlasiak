@@ -115,7 +115,7 @@ class OrderController extends Controller {
         }
 
         if(!empty($input['updated_at'])) {
-            $input['updated_at'] = date();
+            $input['updated_at'] = date('Y-m-d');
         }
         
         $order = Order::createOrUpdate($input, $id);
