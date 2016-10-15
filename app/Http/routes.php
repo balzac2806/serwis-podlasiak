@@ -29,10 +29,10 @@ Route::delete('api/user/{id}', 'UserController@destroy');
 
 // Produkty 
 Route::post('api/product/', 'ProductController@store');
-Route::put('api/product/{id}', 'ProductController@store');
+Route::put('api/product/{id}/', 'ProductController@store');
 Route::get('api/product/', 'ProductController@create');
-Route::get('api/product/{id}', 'ProductController@show');
-Route::delete('api/product/{id}', 'ProductController@destroy');
+Route::get('api/product/{id}/', 'ProductController@show');
+Route::delete('api/product/{id}/', 'ProductController@destroy');
 
 // Protokoły Zwrotu 
 Route::post('api/orders', 'OrderController@store');
