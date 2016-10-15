@@ -1,0 +1,40 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Edycja Produktu</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <form name="productForm">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label" for="name">Nazwa Produktu</label>
+                                <input class="form-control" name="name" type="text" ng-model="product.name"/>
+                                <label ng-show="formErrors.name" class="alert alert-danger">Pole nazwa produktu jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="person">Osoba Dodająca</label>
+                                <input class="form-control" name="person" type="text" ng-model="product.person"/>
+                                <label ng-show="formErrors.person" class="alert alert-danger">Pole osoba dodająca jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="status">Status</label>
+                                <select class="form-control" placeholder="-- Wybierz --" ng-options="status as status.name for status in statuses" ng-model="product.status">
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <button ng-click="cancel()" class="btn btn-default">Wróć</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                        <button ng-click="saveProduct(user)" class="btn btn-primary" ng-disabled="productForm.$invalid">Zapisz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

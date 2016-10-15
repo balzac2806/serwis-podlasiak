@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">Dodawanie protokołu</h3>
+</div>
+<div class="modal-body">
+    <div>
+        <form name="orderForm">
+            <fieldset>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label class="control-label" for="issuer">Osoba Wystawiąjąca</label>
+                        <input class="form-control" name="issuer" type="text" ng-model="order.issuer"/>
+                        <label ng-show="formErrors.issuer" class="alert alert-danger">Pole osoba wystawiająca jest wymagane!</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="checker">Osoba Sprawdzająca</label>
+                        <input class="form-control" name="checker" type="text" ng-model="order.checker"/>
+                        <label ng-show="formErrors.checker" class="alert alert-danger">Pole osoba sprawdzająca jest wymagane!</label>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button ng-click="cancel()" class="btn btn-default">Wróć</button>
+    <button ng-click="save()" class="btn btn-primary">Dodaj</button>
+</div>

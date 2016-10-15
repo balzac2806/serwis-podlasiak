@@ -1,0 +1,28 @@
+<div id="sidebar-wrapper">
+    <ul class="sidebar">
+        <li class="sidebar-main">
+            <a ng-click="toggleSidebar()">
+                Dashboard
+                <span class="menu-icon glyphicon glyphicon-transfer"></span>
+            </a>
+        </li>
+        <li class="sidebar-list">
+            <a><span><strong>Menu</strong></span></a>
+        </li>
+        <li class="sidebar-list">
+            <a ui-sref="dashboard" ng-class="{ 'actives': isActive($state, 'dashboard')}">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+        </li>
+        <li class="sidebar-list">
+            <a ui-sref="productsList" ng-class="{ 'actives': isActive($state, 'productsList')}">Brakujące Towary<span class="menu-icon fa fa-university"></span></a>
+        </li>
+        <li class="sidebar-list">
+            <a ui-sref="returnsList" ng-class="{ 'actives': isActive($state, 'returnsList')}">Zwroty <span class="menu-icon fa fa-map-marker"></span></a>
+        </li>
+        <!--- ADMIN MENU -->
+        <li ng-show="permissions.user.role == 'admin'" ng-click="adminMenu()" class="sidebar-list">
+            <a><strong>Administracja </strong><span class="menu-icon fa fa-gears"></span></a>
+        <li ng-show="admin && permissions.user.role == 'admin'" class="sidebar-list sidebar-list-child">
+            <a ui-sref="users" ng-class="{ 'actives': isActive($state, 'users')}">Użytkownicy <span class="menu-icon fa fa-user"></span></a>
+        </li>
+    </ul>
+</div>

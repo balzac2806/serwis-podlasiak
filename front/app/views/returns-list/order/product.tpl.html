@@ -1,0 +1,53 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Edycja Protokołu</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <form name="productForm">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label" for="name">Nazwa Towaru</label>
+                                <input class="form-control" name="name" type="text" ng-model="product.name"/>
+                                <label ng-show="formErrors.name" class="alert alert-danger">Pole nazwa jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="status">Status</label>
+                                <select name="role" class="form-control" placeholder="-- Wybierz --" ng-model="product.status" required>
+                                    <option value="">-- Wybierz --</option>
+                                    <option ng-repeat="status in statuses" ng-selected="{{status == product.status}}" value="{{status}}">{{status}}</option>
+                                </select>
+                                <label ng-show="formErrors.status" class="alert alert-danger">Pole status jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="country">Kraj</label>
+                                <input class="form-control" name="country" type="text" ng-model="product.country"/>
+                                <label ng-show="formErrors.country" class="alert alert-danger">Pole kraj jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="number">Numer listu przewozowego</label>
+                                <input class="form-control" name="number" type="text" ng-model="product.number"/>
+                                <label ng-show="formErrors.number" class="alert alert-danger">Pole numer listu przewozowego jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="sender">Nadawca</label>
+                                <input class="form-control" name="sender" type="text" ng-model="product.sender"/>
+                                <label ng-show="formErrors.sender" class="alert alert-danger">Pole nadawca jest wymagane!</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <button ng-click="cancel()" class="btn btn-default">Wróć</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                        <button ng-click="saveProduct(product)" class="btn btn-primary" ng-disabled="productForm.$invalid">Zapisz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

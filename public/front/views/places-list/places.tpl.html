@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="panel-body">
+        <form name="searchForm">
+            <fieldset>
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-group activites-select">
+                        <label for="name">Nazwa</label>
+                        <input type="text" name="name" class="form-control" ng-model="search.name" required/>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-group activites-select">
+                        <label for="voivodeship">Województwo</label>
+                        <div class="col-sm-10">
+                            <ui-select ng-model="search.voivodeship" name="voivodeship" theme="bootstrap" reset-search-input="true">
+                                <ui-select-match placeholder="Wpisz i wybierz województwo...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices  refresh="autocompleteVoivd($select.search)" refresh-delay="0" repeat="voivodeship.id as voivodeship in voivodeships | filter:$select.search">
+                                    <div ng-bind-html="voivodeship.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-group activites-select">
+                        <label for="course">Kierunek</label>
+                        <div class="col-sm-10">
+                           <ui-select ng-model="search.course" name="courses" theme="bootstrap" reset-search-input="true">
+                                <ui-select-match placeholder="Wpisz i wybierz kierunek...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices  refresh="autocomplete($select.search)" refresh-delay="0" repeat="course.id as course in courses | filter:$select.search">
+                                    <div ng-bind-html="course.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="btn-group btn-group-justified">
+                                <a class="btn btn-info rounded" ng-click="searchPlaces(search)"><i class="fa fa-search"></i></a>
+                                <a class="btn btn-danger rounded" ng-if="check" ng-click="clearSearch()"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                    </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-md-1 col-md-offset-11">Sortuj wg:</label>
+        </div>
+        <div class="form-group">
+            <select class="btn btn-primary col-md-1 col-md-offset-11" name="sort" id="sort" ng-model="sort">
+                <option ng-repeat="option in sortOptions" value="{{option.id}}">{{option.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover" ng-if="!isLoading">
+            <thead>
+                <tr>
+                    <th class="col-md-1">
+
+                    </th>
+                    <th class="text-center">
+                        Lista Uczelni W Polsce
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="list" ng-repeat="place in places">
+                    <td>
+                        <div star-rating stars="5" outer-star-selection="stars" outer-percent="rating" rating-define="percent" rating-percent="{{place.rate * 20}}" star-radius="10" sel-color="gold" back-color=""></div>
+                        <h5 class="ng-binding"><strong>Ocena: {{place.rate}}/5</strong></h5><hr/>
+                        <p><b>Ilość ocen: {{place.count}}</b></p>
+                    </td>
+                    <td>
+                        <h3><a ui-sref="placeView({placeId: place.id})"><strong>{{place.name}}</strong></a></h3>
+                        </hr>
+                        <h4>{{place.description}}</h4>
+                        <p>{{place.address|| '-'}}</p>
+                        <p>{{place.post_code}} {{place.city}}</p>
+                        <br/>
+                        Kontakt: {{place.phone}} / Strona: <a href="{{place.site}}">{{place.site}}</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="addRate(place)">Oceń</button>
+                    </td>
+                </tr>
+                <tr ng-if="places.length === 0">
+                    <td colspan="3" class="text-center">
+                        <h3>Brak Wyników !</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

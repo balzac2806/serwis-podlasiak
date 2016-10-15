@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h3 class="modal-title">Dodawanie produktu</h3>
+</div>
+<div class="modal-body">
+    <div>
+        <form name="productForm">
+            <fieldset>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label class="control-label" for="name">Nazwa Towaru</label>
+                        <input class="form-control" name="name" type="text" ng-model="product.name"/>
+                        <label ng-show="formErrors.name" class="alert alert-danger">Pole nazwa jest wymagane!</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="status">Status</label>
+                        <select name="role" class="form-control" placeholder="-- Wybierz --" ng-model="product.status" required>
+                            <option value="">-- Wybierz --</option>
+                            <option ng-repeat="status in statuses" ng-selected="{{status == product.status}}" value="{{status}}">{{status}}</option>
+                        </select>
+                        <label ng-show="formErrors.status" class="alert alert-danger">Pole status jest wymagane!</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="country">Kraj</label>
+                        <input class="form-control" name="country" type="text" ng-model="product.country"/>
+                        <label ng-show="formErrors.country" class="alert alert-danger">Pole kraj jest wymagane!</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="number">Numer listu przewozowego</label>
+                        <input class="form-control" name="number" type="text" ng-model="product.number"/>
+                        <label ng-show="formErrors.number" class="alert alert-danger">Pole numer listu przewozowego jest wymagane!</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="sender">Nadawca</label>
+                        <input class="form-control" name="sender" type="text" ng-model="product.sender"/>
+                        <label ng-show="formErrors.sender" class="alert alert-danger">Pole nadawca jest wymagane!</label>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button ng-click="cancel()" class="btn btn-default">Wróć</button>
+    <button ng-click="save()" class="btn btn-primary">Dodaj</button>
+</div>
