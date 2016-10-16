@@ -166,6 +166,7 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
                             } else {
                                 $scope.order.status = $scope.statuses[1];
                             }
+                            $scope.order.authoriser = $rootScope.permissions.user.name;
                         } else {
                             growl.addErrorMessage(response.data.error);
                         }

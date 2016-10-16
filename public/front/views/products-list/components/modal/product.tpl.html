@@ -13,13 +13,8 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="person">Osoba Dodająca</label>
-                        <input class="form-control" name="person" type="text" ng-model="product.person"/>
+                        <input class="form-control" disabled name="person" type="text" ng-model="product.person"/>
                         <label ng-show="formErrors.person" class="alert alert-danger">Pole osoba dodająca jest wymagane!</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="status">Status</label>
-                        <select class="form-control" placeholder="-- Wybierz --" ng-options="status as status.name for status in statuses" ng-model="product.status">
-                        </select>
                     </div>
                 </div>
             </fieldset>

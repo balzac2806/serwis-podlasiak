@@ -19,7 +19,9 @@ class OrderProduct extends Authenticatable {
         'country',
         'number',
         'sender',
-        'updated_at'
+        'updated_at',
+        'document_number',
+        'date',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -31,6 +33,15 @@ class OrderProduct extends Authenticatable {
     public function getUpdatedAtAttribute($value) {
         if (!empty($value)) {
             $value = date('Y-m-d', strtotime($value));
+        }
+        return $value;
+    }
+    
+    public function getDateAttribute($value) {
+        if (!empty($value)) {
+            $value = date('Y-m-d', strtotime($value));
+        } else {
+            $value = date('Y-m-d');
         }
         return $value;
     }

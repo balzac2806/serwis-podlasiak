@@ -25,7 +25,7 @@ class UserController extends Controller {
         return Validator::make($data, [
                     'name' => 'required',
                     'email' => 'required|email|unique:users,email,NULL',
-                    'password' => 'required|min:6',
+                    'password' => 'required',
                     'password_confirmation' => 'required|same:password',
                     'role' => 'required'
         ]);

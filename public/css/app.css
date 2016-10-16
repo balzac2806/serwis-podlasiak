@@ -88,4 +88,10 @@ canvas.star {
 .label-success-row {
   background-color: #94f094; }
 
+.body {
+  font-family: Verdana !important; }
+
+.btn-actions {
+  margin-top: -10x !important; }
+
 /*# sourceMappingURL=app.css.map */

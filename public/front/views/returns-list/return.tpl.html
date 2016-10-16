@@ -17,25 +17,9 @@
                                 <label ng-show="formErrors.checker" class="alert alert-danger">Pole osoba sprawdzająca jest wymagane!</label>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="document_number">Numer Dokumentu</label>
-                                <input class="form-control" name="document_number" type="text" ng-model="order.document_number"/>
-                                <label ng-show="formErrors.document_number" class="alert alert-danger">Pole numer dokumentu jest wymagane!</label>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label" for="authoriser">Osoba Zatwierdzająca</label>
-                                <input class="form-control" name="authoriser" type="text" ng-model="order.authoriser"/>
+                                <input class="form-control" disabled name="authoriser" type="text" ng-model="order.authoriser"/>
                                 <label ng-show="formErrors.authoriser" class="alert alert-danger">Pole osoba zatwierdzająca jest wymagane!</label>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="date">Data</label>
-                                <p class="input-group">
-                                    <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="order.date" 
-                                           is-open="popup" datepicker-options="dateOptions" show-button-bar="false" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default button-picker" ng-click="startDate()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                    </span>
-                                </p>
-                                <label ng-show="formErrors.date" class="alert alert-danger">Pole data jest wymagane!</label>
                             </div>
                         </div>
                     </fieldset>

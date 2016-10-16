@@ -213,6 +213,7 @@ interMap.controller('productModalController', ['$scope', '$stateParams', '$rootS
         ];
 
         $scope.product.status = $scope.statuses[0];
+        $scope.product.person = $rootScope.permissions.user.name;
 
         if (angular.isDefined(product.name)) {
             $scope.productId = product.id;

@@ -783,6 +783,7 @@ class ComposerStaticInit816ae24ff7d1e3f0777d89b2c99aab9e
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UpdateOrderProductsTableAddColumnDateNumberDocument' => __DIR__ . '/../..' . '/database/migrations/2016_10_16_134716_update_order_products_table_add_column_date_number_document.php',
         'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',
     );
 

@@ -92,10 +92,10 @@
                     </td>
                     <td ng-if="permissions.user.role != 'user'">
                         <span ng-if="permissions.user.role == 'admin'" ng-click="removeProduct(val.id)" style="float: right" class="btn btn-link btn-sm">
-                            <button class="btn btn-danger btn-addon"><i class="fa fa-times"></i> Usuń</button>
+                            <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
                         </span>
                         <span ng-if="permissions.user.role != 'user'" ui-sref="orderProductView({productId: val.id})"style="float: right" class="btn btn-link btn-sm">
-                            <button class="btn btn-info btn-addon"><i class="fa fa-pencil"></i> Edytuj</button>
+                            <button class="btn btn-info btn-addon btn-actions"><i class="fa fa-pencil"></i> Edytuj</button>
                         </span>
                     </td>
                 </tr>

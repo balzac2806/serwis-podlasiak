@@ -518,5 +518,6 @@ return array(
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UpdateOrderProductsTableAddColumnDateNumberDocument' => $baseDir . '/database/migrations/2016_10_16_134716_update_order_products_table_add_column_date_number_document.php',
     'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
 );

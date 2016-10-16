@@ -25,13 +25,9 @@ class OrderController extends Controller {
         return Validator::make($data, [
                     'issuer' => 'required|max:255',
                     'checker' => 'required|max:255',
-                    'document_number' => 'required|max:255',
                     'authoriser' => 'required|max:255',
-                    'date' => 'required|max:255',
         ]);
     }
-    
-    
 
     public function create() {
         $input = Input::all();
@@ -42,26 +38,40 @@ class OrderController extends Controller {
         $data = Order::select('*');
         if (!empty($find)) {
             if (!empty($find['name'])) {
-                $data = $data->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($find['name']) . '%']);
+                $array = OrderProduct::select('order_id')->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($find['name']) . '%'])
+                                ->get()->toArray();
+                $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
             if (!empty($find['person'])) {
                 $data = $data->whereRaw('LOWER(issuer) LIKE ?', ['%' . strtolower($find['person']) . '%']);
             }
             if (!empty($find['sender'])) {
                 $array = OrderProduct::select('order_id')->whereRaw('LOWER(sender) LIKE ?', ['%' . strtolower($find['sender']) . '%'])
-                        ->get()->toArray();
+                                ->get()->toArray();
                 $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
             if (!empty($find['number'])) {
                 $array = OrderProduct::select('order_id')->whereRaw('LOWER(number) LIKE ?', ['%' . strtolower($find['number']) . '%'])
-                        ->get()->toArray();
+                                ->get()->toArray();
                 $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
             if (!empty($find['date'])) {
-                $data = $data->whereBetween('date', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
+                $data = $data->whereBetween('created_at', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
             }
         }
         $data = $data->get()->toArray();
+
+        $orderIds = array_column($data, 'id');
+        $orders = OrderProduct::select(DB::raw('distinct(order_id)'))
+                        ->where('date', '=', null)
+                        ->orWhere('document_number', '=', null)->get()->toArray();
+        foreach ($orderIds as $key => $val) {
+            if(in_array($val, array_column($orders,'order_id'))){
+                $data[$key]['status'] = 1;
+            } else {
+                $data[$key]['status'] = 2;
+            }
+        }
 
         $sortArray = array();
 
@@ -105,8 +115,8 @@ class OrderController extends Controller {
         } else {
             $input['status'] = 1;
             $lastId = Order::select(DB::raw('max(id)'))->get()->toArray();
-            $protocolId = !empty($lastId[0]['max'])? $lastId[0]['max'] + 1 : 1;
-            $input['name'] = 'Protokół '.$protocolId;
+            $protocolId = !empty($lastId[0]['max']) ? $lastId[0]['max'] + 1 : 1;
+            $input['name'] = 'Protokół ' . $protocolId;
             $valid = $this->validator($input);
             if ($valid->fails()) {
                 $error = $valid->errors();
@@ -114,10 +124,10 @@ class OrderController extends Controller {
             }
         }
 
-        if(!empty($input['updated_at'])) {
+        if (!empty($input['updated_at'])) {
             $input['updated_at'] = date('Y-m-d');
         }
-        
+
         $order = Order::createOrUpdate($input, $id);
 
         $success = true;

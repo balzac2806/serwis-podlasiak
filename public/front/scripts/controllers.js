@@ -422,6 +422,7 @@ interMap.controller('productModalController', ['$scope', '$stateParams', '$rootS
         ];
 
         $scope.product.status = $scope.statuses[0];
+        $scope.product.person = $rootScope.permissions.user.name;
 
         if (angular.isDefined(product.name)) {
             $scope.productId = product.id;
@@ -622,6 +623,7 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
                             } else {
                                 $scope.order.status = $scope.statuses[1];
                             }
+                            $scope.order.authoriser = $rootScope.permissions.user.name;
                         } else {
                             growl.addErrorMessage(response.data.error);
                         }
@@ -763,7 +765,7 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
                         }
                     });
         };
-        
+
         $scope.cancel = function () {
             $state.go('returnsList');
         };
@@ -791,6 +793,11 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
                     .then(function (response) {
                         if (response.data.success) {
                             $scope.product = response.data.product;
+                            if (angular.isDefined($scope.product.date)) {
+                                $scope.product.date = new Date($scope.product.date);
+                            } else {
+                                $scope.product.date = new Date();
+                            }
                         } else {
                             growl.addErrorMessage(response.data.error);
                         }
@@ -802,7 +809,7 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
 
 
         $scope.cancel = function () {
-            $state.go('orderProductsList',{returnId: $scope.product.order_id});
+            $state.go('orderProductsList', {returnId: $scope.product.order_id});
         };
 
         $scope.saveProduct = function () {
@@ -810,7 +817,7 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
             $http.put(url + $scope.product.id, $scope.product).
                     success(function (data) {
                         if (data.success) {
-                            $state.go('orderProductsList',{returnId: $scope.product.order_id});
+                            $state.go('orderProductsList', {returnId: $scope.product.order_id});
                             growl.addSuccessMessage('Produkt został zaktualizowany pomyślnie !');
                         } else {
                             if (typeof data.error === 'object') {
@@ -823,6 +830,18 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
                     finally(function () {
                         $scope.isLoading = false;
                     });
+        };
+
+        $scope.popup = false;
+
+        $scope.dateOptions = {
+            dateDisabled: false,
+            formatYear: 'yy',
+            startingDay: 1,
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
     }]);

@@ -33,9 +33,7 @@ class Order extends Authenticatable {
     public function getDateAttribute($value) {
         if (!empty($value)) {
             $value = date('Y-m-d', strtotime($value));
-        } else {
-            $value = date('Y-m-d');
-        }
+        } 
         return $value;
     }
     
@@ -45,7 +43,14 @@ class Order extends Authenticatable {
         }
         return $value;
     }
-
+    
+    public function getDocumentNumberAttribute($value) {
+        if (empty($value)) {
+            $value = null;
+        }
+        return $value;
+    }
+    
     public static function getAll() {
         $orders = DB::table('orders')
                 ->orderBy('updated_at', 'desc')
