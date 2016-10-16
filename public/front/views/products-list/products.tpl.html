@@ -57,7 +57,7 @@
         <table class="table table-hover" ng-if="!isLoading">
             <thead>
                 <tr>
-                    <th class="col-md-2">
+                    <th>
                         <span href="#" ng-click="sortType = 'name';
                             sortReverse = !sortReverse">
                             Nazwa
@@ -65,7 +65,7 @@
                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
-                    <th class="col-md-2">
+                    <th>
                         <span ng-click="sortType = 'created_at';
                             sortReverse = !sortReverse">
                             Data Utworzenia
@@ -73,15 +73,7 @@
                             <span ng-show="sortType == 'created_at' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
-                    <th class="col-md-2">
-                        <span ng-click="sortType = 'updated_at';
-                            sortReverse = !sortReverse">
-                            Data Modyfikacji
-                            <span ng-show="sortType == 'updated_at' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'updated_at' && sortReverse" class="fa fa-caret-up"></span>
-                        </span>
-                    </th>
-                    <th class="col-md-2">
+                    <th>
                         <span ng-click="sortType = 'person';
                             sortReverse = !sortReverse">
                             Wystawiający
@@ -89,7 +81,7 @@
                             <span ng-show="sortType == 'person' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
-                    <th class="col-md-2">
+                    <th>
                         <span ng-click="sortType = 'status';
                             sortReverse = !sortReverse">
                             Status
@@ -104,22 +96,19 @@
             </thead>
             <tbody>
                 <tr class="" ng-class="{'alert-danger': val.status == 1}" ng-repeat="(key, val) in products | orderBy: sortType: sortReverse">
-                    <td class="col-md-2">
+                    <td>
                         {{val.name}}
                     </td>
-                    <td class="col-md-2">
+                    <td>
                         {{val.created_at|| '-'}}
                     </td>
-                    <td class="col-md-2">
-                        {{val.updated_at|| '-'}}
-                    </td>
-                    <td class="col-md-2">
+                    <td>
                         {{val.person}}
                     </td>
-                    <td class="col-md-2">
+                    <td>
                         {{statuses[val.status - 1 ]}}
                     </td>
-                    <td ng-if="permissions.user.role != 'user'" class="col-md-2">
+                    <td ng-if="permissions.user.role != 'user'">
                         <span ng-if="permissions.user.role == 'admin'" ng-click="removeProduct(val.id)" style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
                         </span>

@@ -41,7 +41,7 @@ class OrderProduct extends Authenticatable {
         if (!empty($value)) {
             $value = date('Y-m-d', strtotime($value));
         } else {
-            $value = date('Y-m-d');
+            $value = null;
         }
         return $value;
     }

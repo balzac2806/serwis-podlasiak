@@ -161,6 +161,21 @@ td, th {
     .table-bordered td, .table-bordered th {
         border: 1px solid #ddd !important;
     }
+    #sidebar-wrapper {
+        display: none;
+    }
+    button {
+        display: none !important;
+    }
+    form {
+        display: none;
+    }
+    .dropdown-toggle {
+        display: none;
+    }
+    th:last-child {
+        display: none !important;
+    }
 }
 @font-face {
     font-family: "Glyphicons Halflings";
@@ -6956,4 +6971,15 @@ ul.sidebar .sidebar-list .menu-icon {
 
 .actives {
     color: #fff !important;
+}
+
+.btn-actions {
+    padding: 0px 4px !important;
+    font-size: 14px !important;
+    margin-top: -6px !important;
+    height: 26px !important;
+}
+
+th {
+    cursor: pointer;
 }

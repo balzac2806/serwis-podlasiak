@@ -1,9 +1,13 @@
-var interMap = angular.module('interMap', ['ngRoute', 'ngCookies', 'ui.router', 'angular-growl', 'ui.bootstrap', 'pascalprecht.translate', 
+var interMap = angular.module('interMap', ['ngRoute', 'ngCookies', 'ui.router', 'angular-growl', 'ui.bootstrap', 'pascalprecht.translate',
     'ui.select', 'ngSanitize']);
 
 interMap.config(['growlProvider', function (growlProvider) {
         growlProvider.globalTimeToLive(5000);
     }]);
+
+angular.isDefinedNotNull = function (val) {
+    return angular.isDefined(val) && val !== null;
+};
 
 interMap.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {

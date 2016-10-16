@@ -84,10 +84,10 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
                     .then(function (response) {
                         if (response.data.success) {
                             $scope.product = response.data.product;
-                            if (angular.isDefined($scope.product.date)) {
+                            if (angular.isDefinedNotNull($scope.product.date)) {
                                 $scope.product.date = new Date($scope.product.date);
                             } else {
-                                $scope.product.date = new Date();
+                                $scope.product.date = null;
                             }
                         } else {
                             growl.addErrorMessage(response.data.error);
@@ -129,6 +129,7 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
             dateDisabled: false,
             formatYear: 'yy',
             startingDay: 1,
+            startDate: new Date()
         };
 
         $scope.startDate = function () {
