@@ -53,7 +53,7 @@ interMap.controller('userController', ['$scope', '$stateParams', '$rootScope', '
 
         $scope.editMode = false;
         $scope.user = {};
-        $scope.roles = ['user', 'moderator', 'admin'];
+        $scope.roles = ['user', 'viewer', 'moderator', 'admin'];
 
         var url = '/api/user/';
 

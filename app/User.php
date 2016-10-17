@@ -28,6 +28,7 @@ class User extends Authenticatable {
     const ROLE_ADMIN = 'admin';
     const ROLE_MODERATOR = 'moderator';
     const ROLE_USER = 'user';
+    const ROLE_VIEWER= 'viewer';
 
     public static function getAll() {
         $users = DB::table('users')

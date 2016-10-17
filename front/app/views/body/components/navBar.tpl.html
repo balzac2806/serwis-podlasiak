@@ -15,7 +15,7 @@
         <li class="sidebar-list">
             <a ui-sref="productsList" ng-class="{ 'actives': isActive($state, 'productsList')}">Brakujące Towary<span class="menu-icon fa fa-university"></span></a>
         </li>
-        <li class="sidebar-list">
+        <li ng-if="permissions.user.role != 'viewer'" class="sidebar-list">
             <a ui-sref="returnsList" ng-class="{ 'actives': isActive($state, 'returnsList')}">Zwroty <span class="menu-icon fa fa-map-marker"></span></a>
         </li>
         <!--- ADMIN MENU -->

@@ -41,7 +41,7 @@
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <button class="btn btn-danger col-md-2 pull-right" ng-click="addProduct()">Dodaj</button>
+            <button ng-if="permissions.user.role != 'viewer'" class="btn btn-danger col-md-2 pull-right" ng-click="addProduct()">Dodaj</button>
         </div>
     </div>
     <div class="panel-body">
@@ -60,7 +60,7 @@
                     <th>
                         <span href="#" ng-click="sortType = 'name';
                             sortReverse = !sortReverse">
-                            Nazwa
+                            Towar
                             <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
@@ -68,7 +68,7 @@
                     <th>
                         <span ng-click="sortType = 'created_at';
                             sortReverse = !sortReverse">
-                            Data Utworzenia
+                            Data
                             <span ng-show="sortType == 'created_at' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'created_at' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
@@ -76,7 +76,7 @@
                     <th>
                         <span ng-click="sortType = 'person';
                             sortReverse = !sortReverse">
-                            Wystawiający
+                            Dodał
                             <span ng-show="sortType == 'person' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'person' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
@@ -89,7 +89,7 @@
                             <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
-                    <th ng-if="permissions.user.role != 'user'" class="text-center col-md-2">
+                    <th ng-if="permissions.user.role != 'user' && permissions.user.role != 'viewer'" class="text-center col-md-2">
                         Akcje
                     </th>
                 </tr>
@@ -112,7 +112,7 @@
                         <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń towar" ng-really-message="Czy na pewno chcesz usunąć towar?" ng-really-click="removeProduct(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
                         </span>
-                        <span ng-if="permissions.user.role != 'user'" ui-sref="productView({productId: val.id})"style="float: right" class="btn btn-link btn-sm">
+                        <span ng-if="permissions.user.role != 'user' && permissions.user.role != 'viewer'" ui-sref="productView({productId: val.id})"style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-info btn-addon btn-actions"><i class="fa fa-pencil"></i> Edytuj</button>
                         </span>
                     </td>

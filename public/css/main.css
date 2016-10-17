@@ -176,6 +176,9 @@ td, th {
     th:last-child {
         display: none !important;
     }
+    #header {
+        display: none !important;
+    }
 }
 @font-face {
     font-family: "Glyphicons Halflings";
@@ -6986,4 +6989,9 @@ th {
 
 td {
     padding: 0 !important;
+    padding-top: 1px !important;
+}
+
+.alert-danger {
+    color: black !important;
 }

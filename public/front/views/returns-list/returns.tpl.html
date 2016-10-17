@@ -46,23 +46,23 @@
                                 <a class="btn btn-info rounded" ng-click="searchOrders(search)"><i class="fa fa-search"></i></a>
                                 <a class="btn btn-danger rounded" ng-if="check" ng-click="clearSearch()"><i class="fa fa-times"></i></a>
                             </div>
+
                         </div>
                     </div>
+                </div>
             </fieldset>
         </form>
     </div>
-    <div class="panel-body">
-        <div class="form-group">
-            <button class="btn btn-danger col-md-2 pull-right" ng-click="addOrder()">Dodaj</button>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="form-group text-center">
+    <div class="form-group text-center">
+        <div class="col-md-9">
             <h3>
                 <strong>
-                    Lista - Protokoły Zwrotów
+                    Protokoły Zwrotów
                 </strong>
             </h3>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-danger col-md-12 pull-right" ng-click="addOrder()">Dodaj</button>
         </div>
     </div>
     <div class="panel-body">
@@ -72,7 +72,7 @@
                     <th>
                         <span href="#" ng-click="sortType = 'name';
                             sortReverse = !sortReverse">
-                            Nazwa
+                            Numer Protokołu
                             <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
@@ -80,7 +80,7 @@
                     <th>
                         <span ng-click="sortType = 'created_at';
                             sortReverse = !sortReverse">
-                            Data Utworzenia
+                            Data
                             <span ng-show="sortType == 'created_at' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'created_at' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
@@ -88,7 +88,7 @@
                     <th>
                         <span ng-click="sortType = 'issuer';
                             sortReverse = !sortReverse">
-                            Wystawiający
+                            Spisał
                             <span ng-show="sortType == 'issuer' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'issuer' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
@@ -99,14 +99,6 @@
                             Magazynier
                             <span ng-show="sortType == 'checker' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'checker' && sortReverse" class="fa fa-caret-up"></span>
-                        </span>
-                    </th>
-                    <th>
-                        <span ng-click="sortType = 'authoriser';
-                            sortReverse = !sortReverse">
-                            Zatwierdzający
-                            <span ng-show="sortType == 'authoriser' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'authoriser' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
                     <th class="text-center">
@@ -121,16 +113,13 @@
                         {{val.name}}
                     </td>
                     <td>
-                        {{val.created_at }}
+                        {{val.created_at}}
                     </td>
                     <td>
                         {{val.issuer}}
                     </td>
                     <td>
                         {{val.checker}}
-                    </td>
-                    <td>
-                        {{val.authoriser}}
                     </td>
                     <td>
                         <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń protokół" ng-really-message="Czy na pewno chcesz usunąć protokół?" ng-really-click="removeOrder(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
@@ -140,7 +129,7 @@
                             <button class="btn btn-info btn-addon btn-actions"><i class="fa fa-pencil"></i> Edytuj</button>
                         </span>
                         <span ui-sref="orderProductsList({returnId: val.id})" style="float: right" class="btn btn-link btn-sm">
-                            <button class="btn btn-success btn-addon btn-actions"><i class="fa fa-pencil"></i> Produkty</button>
+                            <button class="btn btn-success btn-addon btn-actions"><i class="fa fa-pencil"></i> Otwórz</button>
                         </span>
                     </td>
                 </tr>
