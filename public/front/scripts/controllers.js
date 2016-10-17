@@ -116,9 +116,7 @@ interMap.controller('usersController', ['$scope', '$rootScope', '$http', '$state
                     }
                 });
 
-        $scope.remove = function ($event, id) {
-            $event.stopImmediatePropagation();
-
+        $scope.removeUsers = function (id) {
             $scope.removeUser(id).
                     success(function (data) {
                         if (data.success) {
@@ -564,7 +562,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
                         });
             }
         });
-
+        
         $scope.removeOrder = function (id) {
             $http.delete(url + id).
                     success(function (data) {
@@ -617,6 +615,11 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
                                 $scope.order.date = new Date($scope.order.date);
                             } else {
                                 $scope.order.date = new Date();
+                            }
+                            if (angular.isDefined($scope.order.created_at)) {
+                                $scope.order.created_at = new Date($scope.order.created_at);
+                            } else {
+                                $scope.order.created_at = new Date();
                             }
                             if ($scope.order.status == 1) {
                                 $scope.order.status = $scope.statuses[0];
@@ -680,6 +683,7 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
             $scope.orderId = order.id;
             $scope.order = order;
         }
+        $scope.order.created_at = new Date();
 
         var url = '/api/orders/';
 
@@ -704,6 +708,19 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+        };
+        
+        $scope.popup = false;
+
+        $scope.dateOptions = {
+            dateDisabled: false,
+            formatYear: 'yy',
+            startingDay: 1,
+            startDate: new Date()
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
     }]);
@@ -746,7 +763,7 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
 
             modalInstance.result.then(function (data) {
                 $state.go($state.current, {}, {reload: true});
-                growl.addSuccessMessage('Produkt został dodany pomyślnie !');
+                growl.addSuccessMessage('Przesyłka została dodana pomyślnie !');
             });
         };
 
@@ -759,7 +776,7 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
                                     $scope.products.splice(key, 1);
                                 }
                             });
-                            growl.addSuccessMessage('Produkt został usunięty !');
+                            growl.addSuccessMessage('Przesyłka została usunięta !');
                         } else if (data.error) {
                             growl.addErrorMessage(data.error);
                         }
@@ -818,12 +835,12 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
                     success(function (data) {
                         if (data.success) {
                             $state.go('orderProductsList', {returnId: $scope.product.order_id});
-                            growl.addSuccessMessage('Produkt został zaktualizowany pomyślnie !');
+                            growl.addSuccessMessage('Przesyłka została zaktualizowana pomyślnie !');
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się zaktualizować produktu!');
+                                growl.addErrorMessage('Nie udało się zaktualizować przesyłki!');
                             }
                         }
                     }).
@@ -852,6 +869,7 @@ interMap.controller('orderProductModalController', ['$scope', '$stateParams', '$
         $scope.product = {};
 
         $scope.product = product;
+        $scope.product.country = 'PL';
 
         var url = '/api/order-products/';
 
@@ -867,7 +885,7 @@ interMap.controller('orderProductModalController', ['$scope', '$stateParams', '$
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się dodać produktu!');
+                                growl.addErrorMessage('Nie udało się dodać przesyłki!');
                             }
                         }
                     }).

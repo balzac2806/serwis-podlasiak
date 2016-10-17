@@ -32,7 +32,7 @@
                         {{user.updated_at|| '-'}}
                     </td>
                     <td>
-                        <span ng-click="remove($event, user.id)" style="float: right" class="btn btn-link btn-sm">
+                        <span ng-really-header="Usuń użytkownika" ng-really-message="Czy na pewno chcesz usunąć użytkownika?" ng-really-click="removeUsers(user.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-danger btn-addon"><i class="fa fa-times"></i> Usuń</button>
                         </span>
                         <span ng-click="editUser(user.id)" style="float: right" class="btn btn-link btn-sm">

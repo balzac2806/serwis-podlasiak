@@ -24,7 +24,7 @@ class UserController extends Controller {
     protected function validator(array $data) {
         return Validator::make($data, [
                     'name' => 'required',
-                    'email' => 'required|email|unique:users,email,NULL',
+                    'email' => 'required|unique:users,email,NULL',
                     'password' => 'required',
                     'password_confirmation' => 'required|same:password',
                     'role' => 'required'

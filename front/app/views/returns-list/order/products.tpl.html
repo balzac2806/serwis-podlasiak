@@ -8,7 +8,7 @@
         <div class="form-group text-center">
             <h3>
                 <strong>
-                    Protokół - Lista Produktów
+                    Protokół - Lista Przesyłek
                 </strong>
             </h3>
         </div>
@@ -23,14 +23,6 @@
                             Nazwa
                             <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
-                        </span>
-                    </th>
-                    <th>
-                        <span ng-click="sortType = 'created_at';
-                            sortReverse = !sortReverse">
-                            Data Utworzenia
-                            <span ng-show="sortType == 'created_at' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'created_at' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
                     <th>
@@ -87,12 +79,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="list" ng-repeat="(key, val) in products | orderBy: sortType: sortReverse">
+                <tr ng-class="{'label-success-row': (val.document_number != null && val.date != null )}" ng-repeat="(key, val) in products | orderBy: sortType: sortReverse">
                     <td>
                         {{val.name}}
-                    </td>
-                    <td>
-                        {{val.created_at}}
                     </td>
                     <td>
                         {{val.status}}
@@ -113,7 +102,7 @@
                         {{val.date}}
                     </td>
                     <td ng-if="permissions.user.role != 'user'">
-                        <span ng-if="permissions.user.role == 'admin'" ng-click="removeProduct(val.id)" style="float: right" class="btn btn-link btn-sm">
+                        <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń przesyłkę" ng-really-message="Czy na pewno chcesz usunąć przesyłkę?" ng-really-click="removeProduct(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
                         </span>
                         <span ng-if="permissions.user.role != 'user'" ui-sref="orderProductView({productId: val.id})"style="float: right" class="btn btn-link btn-sm">

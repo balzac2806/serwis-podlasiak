@@ -109,7 +109,7 @@
                         {{statuses[val.status - 1 ]}}
                     </td>
                     <td ng-if="permissions.user.role != 'user'">
-                        <span ng-if="permissions.user.role == 'admin'" ng-click="removeProduct(val.id)" style="float: right" class="btn btn-link btn-sm">
+                        <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń towar" ng-really-message="Czy na pewno chcesz usunąć towar?" ng-really-click="removeProduct(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
                         </span>
                         <span ng-if="permissions.user.role != 'user'" ui-sref="productView({productId: val.id})"style="float: right" class="btn btn-link btn-sm">

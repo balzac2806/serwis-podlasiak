@@ -17,9 +17,7 @@ interMap.controller('usersController', ['$scope', '$rootScope', '$http', '$state
                     }
                 });
 
-        $scope.remove = function ($event, id) {
-            $event.stopImmediatePropagation();
-
+        $scope.removeUsers = function (id) {
             $scope.removeUser(id).
                     success(function (data) {
                         if (data.success) {

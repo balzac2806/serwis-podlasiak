@@ -107,7 +107,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
                         });
             }
         });
-
+        
         $scope.removeOrder = function (id) {
             $http.delete(url + id).
                     success(function (data) {
@@ -160,6 +160,11 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
                                 $scope.order.date = new Date($scope.order.date);
                             } else {
                                 $scope.order.date = new Date();
+                            }
+                            if (angular.isDefined($scope.order.created_at)) {
+                                $scope.order.created_at = new Date($scope.order.created_at);
+                            } else {
+                                $scope.order.created_at = new Date();
                             }
                             if ($scope.order.status == 1) {
                                 $scope.order.status = $scope.statuses[0];
@@ -223,6 +228,7 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
             $scope.orderId = order.id;
             $scope.order = order;
         }
+        $scope.order.created_at = new Date();
 
         var url = '/api/orders/';
 
@@ -247,6 +253,19 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+        };
+        
+        $scope.popup = false;
+
+        $scope.dateOptions = {
+            dateDisabled: false,
+            formatYear: 'yy',
+            startingDay: 1,
+            startDate: new Date()
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
     }]);

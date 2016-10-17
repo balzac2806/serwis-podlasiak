@@ -85,5 +85,55 @@ interMap.config(['$stateProvider', '$urlRouterProvider',
                 })
     }]);
 
+interMap.directive('ngReallyClick', ['$uibModal', function ($uibModal) {
+    return {
+        restrict: 'A',
+        scope: {
+            ngReallyHeader: '@',
+            ngReallyMessage: '@',
+            ngReallyClick: '&'
+        },
+        link: function (scope, element, attrs) {
+            element.bind('click', function () {
+                var header = scope.ngReallyHeader;
+                var message = scope.ngReallyMessage;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'front/views/components/modal/confirmDialog.tpl.html',
+                    controller: function ($scope, $uibModalInstance) {
+                        $scope.ok = function () {
+                            $uibModalInstance.close(true);
+                        };
 
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+
+                        $scope.header = header || 'MODAL.CONFIRM.HEADER';
+                        $scope.message = message || 'MODAL.CONFIRM.MSG';
+                    }
+                });
+
+                modalInstance.result.then(function (isConfirmed) {
+                    if (isConfirmed) {
+                        scope.ngReallyClick();
+                    }
+                });
+            });
+        }
+    }
+}]);
+
+interMap.directive('modalClose', function () {
+    return {
+        restrict: 'AE',
+        replace: true,
+        scope: false,
+        controller: function ($scope) {
+            $scope.close = function () {
+                $scope.$uibModal.dismiss('cancel');
+            };
+        },
+        template: '<div class=\"modal-close\"><i class=\"li-close\" ng-click=\"close()\"></i></div>'
+    }
+});
 //# sourceMappingURL=app.js.map

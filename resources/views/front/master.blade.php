@@ -38,7 +38,7 @@
                 <h1>Logowanie</h1>
                 <form name="loginForm" ng-submit="logIn(loginForm)">
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" ng-model="login.username" placeholder="Wpisz adres email..." required/>
+                        <input type="text" class="form-control" name="email" ng-model="login.username" placeholder="Wpisz login..." required/>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" name="password" ng-model="login.password" placeholder="Wpisz hasło..." required/>

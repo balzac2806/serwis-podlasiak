@@ -37,7 +37,7 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
 
             modalInstance.result.then(function (data) {
                 $state.go($state.current, {}, {reload: true});
-                growl.addSuccessMessage('Produkt został dodany pomyślnie !');
+                growl.addSuccessMessage('Przesyłka została dodana pomyślnie !');
             });
         };
 
@@ -50,7 +50,7 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
                                     $scope.products.splice(key, 1);
                                 }
                             });
-                            growl.addSuccessMessage('Produkt został usunięty !');
+                            growl.addSuccessMessage('Przesyłka została usunięta !');
                         } else if (data.error) {
                             growl.addErrorMessage(data.error);
                         }
@@ -109,12 +109,12 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
                     success(function (data) {
                         if (data.success) {
                             $state.go('orderProductsList', {returnId: $scope.product.order_id});
-                            growl.addSuccessMessage('Produkt został zaktualizowany pomyślnie !');
+                            growl.addSuccessMessage('Przesyłka została zaktualizowana pomyślnie !');
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się zaktualizować produktu!');
+                                growl.addErrorMessage('Nie udało się zaktualizować przesyłki!');
                             }
                         }
                     }).
@@ -143,6 +143,7 @@ interMap.controller('orderProductModalController', ['$scope', '$stateParams', '$
         $scope.product = {};
 
         $scope.product = product;
+        $scope.product.country = 'PL';
 
         var url = '/api/order-products/';
 
@@ -158,7 +159,7 @@ interMap.controller('orderProductModalController', ['$scope', '$stateParams', '$
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się dodać produktu!');
+                                growl.addErrorMessage('Nie udało się dodać przesyłki!');
                             }
                         }
                     }).

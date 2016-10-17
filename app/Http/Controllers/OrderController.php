@@ -18,6 +18,7 @@ class OrderController extends Controller {
         return Validator::make($data, [
                     'issuer' => 'required|max:255',
                     'checker' => 'required|max:255',
+                    'created_at' => 'required',
         ]);
     }
 
@@ -26,6 +27,7 @@ class OrderController extends Controller {
                     'issuer' => 'required|max:255',
                     'checker' => 'required|max:255',
                     'authoriser' => 'required|max:255',
+                    'created_at' => 'required',
         ]);
     }
 
@@ -66,7 +68,7 @@ class OrderController extends Controller {
                         ->where('date', '=', null)
                         ->orWhere('document_number', '=', null)->get()->toArray();
         foreach ($orderIds as $key => $val) {
-            if(in_array($val, array_column($orders,'order_id'))){
+            if (in_array($val, array_column($orders, 'order_id'))) {
                 $data[$key]['status'] = 1;
             } else {
                 $data[$key]['status'] = 2;
@@ -104,8 +106,8 @@ class OrderController extends Controller {
 
         $success = false;
 
+        $input['created_at'] = date('Y-m-d', strtotime($input['created_at']));
         if (!empty($id)) {
-            $input['date'] = date('Y-m-d', strtotime($input['date']));
             $valid = $this->validatorUpdate($input);
             if ($valid->fails()) {
                 $error = $valid->errors();
