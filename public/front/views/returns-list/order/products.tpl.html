@@ -65,14 +65,6 @@
                             <span ng-show="sortType == 'document_number' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
-                    <th>
-                        <span ng-click="sortType = 'date';
-                            sortReverse = !sortReverse">
-                            Data Zatwierdzenia
-                            <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
-                        </span>
-                    </th>
                     <th ng-if="permissions.user.role != 'user'" class="text-center">
                         Akcje
                     </th>
@@ -97,9 +89,6 @@
                     </td>
                     <td>
                         {{val.document_number}}
-                    </td>
-                    <td>
-                        {{val.date}}
                     </td>
                     <td ng-if="permissions.user.role != 'user'">
                         <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń przesyłkę" ng-really-message="Czy na pewno chcesz usunąć przesyłkę?" ng-really-click="removeProduct(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
