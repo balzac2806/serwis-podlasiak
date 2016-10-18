@@ -17,6 +17,14 @@
                         <label ng-show="formErrors.checker" class="alert alert-danger">Pole osoba sprawdzająca jest wymagane!</label>
                     </div>
                     <div class="form-group">
+                        <label class="control-label" for="company">Status</label>
+                        <select name="company" class="form-control" placeholder="-- Wybierz --" ng-model="order.company" required>
+                            <option value="">-- Wybierz --</option>
+                            <option ng-repeat="company in companies" ng-selected="{{company == order.company}}" value="{{company}}">{{company}}</option>
+                        </select>
+                        <label ng-show="formErrors.company" class="alert alert-danger">Pole firma jest wymagane!</label>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label" for="date">Data</label>
                         <p class="input-group">
                             <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="order.created_at" 

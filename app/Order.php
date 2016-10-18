@@ -21,7 +21,8 @@ class Order extends Authenticatable {
         'date',
         'status',
         'updated_at',
-        'created_at'
+        'created_at',
+        'company'
     ];
 
     /**

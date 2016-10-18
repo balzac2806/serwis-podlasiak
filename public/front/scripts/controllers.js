@@ -562,7 +562,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
                         });
             }
         });
-        
+
         $scope.removeOrder = function (id) {
             $http.delete(url + id).
                     success(function (data) {
@@ -596,6 +596,11 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
                 id: 2,
                 name: 'zrealizowane'
             }
+        ];
+
+        $scope.companies = [
+            'Podlasiak',
+            'Fonti'
         ];
 
         $scope.isLoading = true;
@@ -679,11 +684,17 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
 
         $scope.order = {};
 
+        $scope.companies = [
+            'Podlasiak',
+            'Fonti'
+        ];
+
         if (angular.isDefined(order.name)) {
             $scope.orderId = order.id;
             $scope.order = order;
         }
         $scope.order.created_at = new Date();
+        $scope.order.company = $scope.companies[0];
 
         var url = '/api/orders/';
 
@@ -709,7 +720,7 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
-        
+
         $scope.popup = false;
 
         $scope.dateOptions = {

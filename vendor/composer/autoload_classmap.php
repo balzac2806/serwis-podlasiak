@@ -519,6 +519,7 @@ return array(
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UpdateOrderProductsTableAddColumnDateNumberDocument' => $baseDir . '/database/migrations/2016_10_16_134716_update_order_products_table_add_column_date_number_document.php',
+    'UpdateTableOrdersAddColumnCompany' => $baseDir . '/database/migrations/2016_10_18_200849_update_table_orders_add_column_company.php',
     'UpdateUsersTableDefaultRoleViewer' => $baseDir . '/database/migrations/2016_10_18_185826_update_users_table_default_role_viewer.php',
     'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
 );

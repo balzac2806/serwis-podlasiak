@@ -19,6 +19,7 @@ class OrderController extends Controller {
                     'issuer' => 'required|max:255',
                     'checker' => 'required|max:255',
                     'created_at' => 'required',
+                    'company' => 'required',
         ]);
     }
 
@@ -28,6 +29,7 @@ class OrderController extends Controller {
                     'checker' => 'required|max:255',
                     'authoriser' => 'required|max:255',
                     'created_at' => 'required',
+                    'company' => 'required',
         ]);
     }
 
