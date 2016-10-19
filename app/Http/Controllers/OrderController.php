@@ -62,6 +62,9 @@ class OrderController extends Controller {
             if (!empty($find['date'])) {
                 $data = $data->whereBetween('created_at', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
             }
+            if (!empty($find['company']) && $find['company'] != 'Wszystkie') {
+                $data = $data->whereRaw('LOWER(company) LIKE ?', ['%' . strtolower($find['company']) . '%']);
+            }
         }
         $data = $data->get()->toArray();
 

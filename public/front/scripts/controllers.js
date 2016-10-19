@@ -465,6 +465,10 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             'niezrealizowane',
             'zrealizowane'
         ];
+        
+        $scope.search = {};
+        $scope.companies = ['Podlasiak', 'Fonti', 'Wszystkie'];
+        $scope.search.company = $scope.companies[2];
 
         $scope.popup = false;
 
@@ -481,8 +485,6 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
         $scope.getOrders = function (sortParam, findParams) {
             return $http.get(url, {params: {sort: sortParam, find: findParams}});
         };
-
-        $scope.search = {};
 
         $scope.searchOrders = function (search) {
             var find = angular.copy(search);
@@ -505,6 +507,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             delete $scope.search.sender;
             delete $scope.search.number;
             $scope.search = {};
+            $scope.search.company = $scope.companies[2];
             $scope.getOrders($scope.sort)
                     .then(function (response) {
                         if (response.data.success) {
@@ -519,6 +522,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
                     || angular.isDefined($scope.search.person)
                     || angular.isDefined($scope.search.sender)
                     || angular.isDefined($scope.search.number)
+                    || angular.isDefined($scope.search.company)
                     || angular.isDefined($scope.search.date)) {
                 $scope.check = true;
             } else {
@@ -746,6 +750,11 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
         }
 
         var url = '/api/order-products/';
+
+        $http.get('/api/orders/' + $scope.orderId)
+                .then(function (response) {
+                    $scope.order = response.data.order;
+                });
 
         $scope.getProducts = function (orderId, sortParam, findParams) {
             return $http.get(url, {params: {sort: sortParam, find: findParams, order_id: orderId}});

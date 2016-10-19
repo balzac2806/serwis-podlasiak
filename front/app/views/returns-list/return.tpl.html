@@ -22,7 +22,7 @@
                                 <label ng-show="formErrors.authoriser" class="alert alert-danger">Pole osoba zatwierdzająca jest wymagane!</label>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="company">Status</label>
+                                <label class="control-label" for="company">Firma</label>
                                 <select name="company" class="form-control" placeholder="-- Wybierz --" ng-model="order.company" required>
                                     <option value="">-- Wybierz --</option>
                                     <option ng-repeat="company in companies" ng-selected="{{company == order.company}}" value="{{company}}">{{company}}</option>

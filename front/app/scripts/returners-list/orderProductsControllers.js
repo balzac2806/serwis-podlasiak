@@ -10,6 +10,11 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
 
         var url = '/api/order-products/';
 
+        $http.get('/api/orders/' + $scope.orderId)
+                .then(function (response) {
+                    $scope.order = response.data.order;
+                });
+
         $scope.getProducts = function (orderId, sortParam, findParams) {
             return $http.get(url, {params: {sort: sortParam, find: findParams, order_id: orderId}});
         };

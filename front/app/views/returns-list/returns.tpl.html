@@ -38,8 +38,18 @@
                         </p>
                     </div>
                 </div>
+                <div class="col-sm-12 col-md-2">
+                    <div class="form-group activites-select">
+                        <div class="form-group">
+                            <label class="control-label" for="company">Firma</label>
+                            <select name="company" class="form-control" placeholder="-- Wybierz --" ng-model="search.company" required>
+                                <option ng-repeat="company in companies" ng-selected="{{company == search.company}}" value="{{company}}">{{company}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <div class="col-sm-12 col-md-2">
+                    <div class="col-sm-12 col-md-2 pull-right">
                         <div class="form-group">
                             <label>&nbsp;</label>
                             <div class="btn-group btn-group-justified">
@@ -50,19 +60,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-sm-12 col-md-2 col-md-offset-10 pull-right">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-danger col-md-12 pull-right" ng-click="addOrder()">Dodaj</button>
+                        </div>
+                    </div>
+                </div>
             </fieldset>
         </form>
     </div>
     <div class="form-group text-center">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <h3>
                 <strong>
                     Protokoły Zwrotów
                 </strong>
             </h3>
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-danger col-md-12 pull-right" ng-click="addOrder()">Dodaj</button>
         </div>
     </div>
     <div class="panel-body">
