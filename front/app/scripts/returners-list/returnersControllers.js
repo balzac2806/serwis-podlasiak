@@ -1,7 +1,7 @@
 interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
 
-        $scope.sortType = 'created_at';
+        $scope.sortType = 'id';
         $scope.sortReverse = true;
 
         var url = '/api/orders/';

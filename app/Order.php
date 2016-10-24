@@ -56,6 +56,7 @@ class Order extends Authenticatable {
     public static function getAll() {
         $orders = DB::table('orders')
                 ->orderBy('updated_at', 'desc')
+                ->orderBy('id', 'desc')
                 ->get();
         return $orders;
     }

@@ -66,7 +66,7 @@ class OrderController extends Controller {
                 $data = $data->whereRaw('LOWER(company) LIKE ?', ['%' . strtolower($find['company']) . '%']);
             }
         }
-        $data = $data->get()->toArray();
+        $data = $data->orderBy('id', 'desc')->get()->toArray();
 
         $orderIds = array_column($data, 'id');
         $orders = OrderProduct::select(DB::raw('distinct(order_id)'))
@@ -77,29 +77,6 @@ class OrderController extends Controller {
                 $data[$key]['status'] = 1;
             } else {
                 $data[$key]['status'] = 2;
-            }
-        }
-
-        $sortArray = array();
-
-        foreach ($data as $product) {
-            foreach ($product as $key => $value) {
-                if (!isset($sortArray[$key])) {
-                    $sortArray[$key] = array();
-                }
-                $sortArray[$key][] = $value;
-            }
-        }
-
-        if (!empty($data)) {
-            if (!empty($input['sort']) && !empty($data)) {
-                $sort = ($input['sort'] == 'name') ? SORT_ASC : SORT_DESC;
-                $orderby = $input['sort'];
-                array_multisort($sortArray[$orderby], $sort, $data);
-            } else {
-                $sort = SORT_ASC;
-                $orderby = 'name';
-                array_multisort($sortArray[$orderby], $sort, $data);
             }
         }
 
