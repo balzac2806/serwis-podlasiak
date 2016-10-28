@@ -1,14 +1,9 @@
 <div class="row">
     <div class="panel-body">
-        <div class="form-group">
-            <button class="btn btn-danger col-md-2 pull-right" ng-click="addProduct()">Dodaj</button>
-        </div>
-    </div>
-    <div class="panel-body">
         <div class="form-group text-center">
             <h3>
                 <strong>
-                    Protokół {{order.id}} - {{order.created_at}} - {{order.company}} - Lista Przesyłek
+                    Protokół {{order.id}} - {{order.created_at}} - {{order.company}} - Lista Przesyłek <button class="btn btn-danger pull-right" ng-click="addProduct()">Dodaj</button>
                 </strong>
             </h3>
         </div>
@@ -68,7 +63,7 @@
                     <th>
                         <span ng-click="sortType = 'date';
                             sortReverse = !sortReverse">
-                            Data Zatwierdzenia
+                            Data Dokumentu
                             <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
                         </span>

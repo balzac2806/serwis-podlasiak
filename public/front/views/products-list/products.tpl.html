@@ -40,15 +40,10 @@
         </form>
     </div>
     <div class="panel-body">
-        <div class="form-group">
-            <button ng-if="permissions.user.role != 'viewer'" class="btn btn-danger col-md-2 pull-right" ng-click="addProduct()">Dodaj</button>
-        </div>
-    </div>
-    <div class="panel-body">
         <div class="form-group text-center">
             <h3>
                 <strong>
-                    Lista - Brakujące Towary
+                    Lista - Brakujące Towary <button ng-if="permissions.user.role != 'viewer'" class="btn btn-danger pull-right" ng-click="addProduct()">Dodaj</button>
                 </strong>
             </h3>
         </div>
