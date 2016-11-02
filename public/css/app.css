@@ -94,4 +94,13 @@ canvas.star {
 .btn-actions {
   margin-top: -10x !important; }
 
+th {
+  padding-left: 0px !important; }
+
+table {
+  font-size: 14px !important; }
+
+button {
+  font-size: 14px !important; }
+
 /*# sourceMappingURL=app.css.map */

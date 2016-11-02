@@ -149,6 +149,9 @@ td, th {
     .table td, .table th {
         background-color: #fff !important;
     }
+    .table td, .table thead, .table th {
+        border: 1px solid;
+    }
     .btn > .caret, .dropup > .btn > .caret {
         border-top-color: #000 !important;
     }
@@ -175,6 +178,10 @@ td, th {
     }
     th:last-child {
         display: none !important;
+    }
+    td:last-child {
+        display: none !important;
+        border: 0px solid;
     }
     #header {
         display: none !important;

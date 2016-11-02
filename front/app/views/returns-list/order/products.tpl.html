@@ -3,18 +3,20 @@
         <div class="form-group text-center">
             <h3>
                 <strong>
-                    Protokół {{order.id}} - {{order.created_at}} - {{order.company}} - Lista Przesyłek <button class="btn btn-danger pull-right" ng-click="addProduct()">Dodaj</button>
+                    Protokół {{order.id}} - {{order.created_at}} - {{order.company}} - Lista Przesyłek <button class="btn btn-success pull-right" ng-click="addProduct()">Dodaj</button>
                 </strong>
             </h3>
+            <p>Spisał: {{order.issuer}} | Sprawdził: {{order.authoriser}}</p>
         </div>
     </div>
     <div class="panel-body">
         <table class="table table-hover" ng-if="!isLoading">
             <thead>
                 <tr>
+                    <th>L.P.</th>
                     <th>
                         <span href="#" ng-click="sortType = 'name';
-                            sortReverse = !sortReverse">
+                                            sortReverse = !sortReverse">
                             Nazwa
                             <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
@@ -22,7 +24,7 @@
                     </th>
                     <th>
                         <span ng-click="sortType = 'status';
-                            sortReverse = !sortReverse">
+                                            sortReverse = !sortReverse">
                             Status
                             <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
@@ -30,7 +32,7 @@
                     </th>
                     <th>
                         <span ng-click="sortType = 'country';
-                            sortReverse = !sortReverse">
+                                            sortReverse = !sortReverse">
                             Kraj
                             <span ng-show="sortType == 'country' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'country' && sortReverse" class="fa fa-caret-up"></span>
@@ -38,7 +40,7 @@
                     </th>
                     <th>
                         <span ng-click="sortType = 'number';
-                            sortReverse = !sortReverse">
+                                            sortReverse = !sortReverse">
                             Numer Listu Przewozowego
                             <span ng-show="sortType == 'number' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'number' && sortReverse" class="fa fa-caret-up"></span>
@@ -46,7 +48,7 @@
                     </th>
                     <th>
                         <span ng-click="sortType = 'sender';
-                            sortReverse = !sortReverse">
+                                            sortReverse = !sortReverse">
                             Nadawca
                             <span ng-show="sortType == 'sender' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'sender' && sortReverse" class="fa fa-caret-up"></span>
@@ -54,7 +56,7 @@
                     </th>
                     <th>
                         <span ng-click="sortType = 'document_number';
-                            sortReverse = !sortReverse">
+                                            sortReverse = !sortReverse">
                             Numer Dokumentu
                             <span ng-show="sortType == 'document_number' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'document_number' && sortReverse" class="fa fa-caret-up"></span>
@@ -62,7 +64,7 @@
                     </th>
                     <th>
                         <span ng-click="sortType = 'date';
-                            sortReverse = !sortReverse">
+                                            sortReverse = !sortReverse">
                             Data Dokumentu
                             <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
@@ -74,7 +76,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-class="{'label-success-row': (val.document_number != null && val.date != null )}" ng-repeat="(key, val) in products | orderBy: sortType: sortReverse">
+                <tr ng-class="{'label-success-row': (val.document_number != null && val.date != null)}" ng-repeat="(key, val) in products | orderBy: sortType: sortReverse">
+                    <td>
+                        {{key + 1}}
+                    </td>
                     <td>
                         {{val.name}}
                     </td>
@@ -98,10 +103,10 @@
                     </td>
                     <td ng-if="permissions.user.role != 'user'">
                         <span ng-if="permissions.user.role == 'admin' || permissions.user.role == 'moderator'" ng-really-header="Usuń przesyłkę" ng-really-message="Czy na pewno chcesz usunąć przesyłkę?" ng-really-click="removeProduct(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
-                            <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
+                            <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> <span class="hidden-xs hidden-sm">Usuń</span></button>
                         </span>
                         <span ng-if="permissions.user.role != 'user'" ui-sref="orderProductView({productId: val.id})"style="float: right" class="btn btn-link btn-sm">
-                            <button class="btn btn-info btn-addon btn-actions"><i class="fa fa-pencil"></i> Edytuj</button>
+                            <button class="btn btn-info btn-addon btn-actions"><i class="fa fa-pencil"></i> <span class="hidden-xs hidden-sm">Edytuj</span></button>
                         </span>
                     </td>
                 </tr>
