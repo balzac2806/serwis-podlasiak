@@ -17,7 +17,7 @@ class OrderProductController extends Controller {
         return Validator::make($data, [
                     'order_id' => 'integer',
                     'name' => 'required|max:255',
-                    'status' => 'required|max:255',
+                    'status' => 'max:255',
                     'country' => 'max:255',
                     'number' => 'required|max:255',
                     'sender' => 'required|max:255',
