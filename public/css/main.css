@@ -148,6 +148,7 @@ td, th {
     }
     .table td, .table th {
         background-color: #fff !important;
+        padding-left: 8px !important;
     }
     .table td, .table thead, .table th {
         border: 1px solid;
@@ -185,6 +186,9 @@ td, th {
     }
     #header {
         display: none !important;
+    }
+    #page-wrapper {
+        padding-left: 0px !important;
     }
 }
 @font-face {
