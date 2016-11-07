@@ -29,6 +29,7 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
 
         $scope.addProduct = function () {
             var modalInstance = $uibModal.open({
+                backdrop: 'static',
                 templateUrl: '/front/views/returns-list/components/modal/product.tpl.html',
                 controller: 'orderProductModalController',
                 resolve: {

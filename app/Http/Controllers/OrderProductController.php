@@ -40,7 +40,6 @@ class OrderProductController extends Controller {
 
         $success = false;
 
-
         $valid = $this->validator($input);
         if ($valid->fails()) {
             $error = $valid->errors();
@@ -50,7 +49,11 @@ class OrderProductController extends Controller {
         if (!empty($input['updated_at'])) {
             $input['updated_at'] = date('Y-m-d');
         }
-
+        
+        if (!empty($input['date'])) {
+            $input['date'] = date('Y-m-d', strtotime($input['date']));
+        } 
+        
         $product = OrderProduct::createOrUpdate($input, $id);
 
         $success = true;

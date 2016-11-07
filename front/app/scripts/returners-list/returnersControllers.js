@@ -85,6 +85,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
 
         $scope.addOrder = function () {
             var modalInstance = $uibModal.open({
+                backdrop: 'static',
                 templateUrl: '/front/views/returns-list/components/modal/return.tpl.html',
                 controller: 'returnModalController',
                 resolve: {

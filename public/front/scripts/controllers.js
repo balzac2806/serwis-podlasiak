@@ -288,6 +288,7 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
         $scope.addProduct = function () {
             var modalInstance = $uibModal.open({
+                backdrop: 'static',
                 templateUrl: '/front/views/products-list/components/modal/product.tpl.html',
                 controller: 'productModalController',
                 resolve: {
@@ -540,6 +541,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
 
         $scope.addOrder = function () {
             var modalInstance = $uibModal.open({
+                backdrop: 'static',
                 templateUrl: '/front/views/returns-list/components/modal/return.tpl.html',
                 controller: 'returnModalController',
                 resolve: {
@@ -770,6 +772,7 @@ interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$ht
 
         $scope.addProduct = function () {
             var modalInstance = $uibModal.open({
+                backdrop: 'static',
                 templateUrl: '/front/views/returns-list/components/modal/product.tpl.html',
                 controller: 'orderProductModalController',
                 resolve: {
