@@ -784,6 +784,7 @@ class ComposerStaticInit816ae24ff7d1e3f0777d89b2c99aab9e
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UpdateOrderProductsTableAddColumnDateNumberDocument' => __DIR__ . '/../..' . '/database/migrations/2016_10_16_134716_update_order_products_table_add_column_date_number_document.php',
+        'UpdateOrderProductsTableChangeStatusToNullable' => __DIR__ . '/../..' . '/database/migrations/2016_11_19_212536_update_order_products_table_change_status_to_nullable.php',
         'UpdateTableOrdersAddColumnCompany' => __DIR__ . '/../..' . '/database/migrations/2016_10_18_200849_update_table_orders_add_column_company.php',
         'UpdateUsersTableDefaultRoleViewer' => __DIR__ . '/../..' . '/database/migrations/2016_10_18_185826_update_users_table_default_role_viewer.php',
         'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',

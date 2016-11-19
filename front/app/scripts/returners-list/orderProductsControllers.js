@@ -1,7 +1,7 @@
 interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter', '$stateParams',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter, $stateParams) {
 
-        $scope.sortType = 'created_at';
+        $scope.sortType = 'id';
         $scope.sortReverse = true;
 
         if (angular.isDefined($stateParams.returnId)) {

@@ -13,7 +13,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="status">Status</label>
-                                <select name="role" class="form-control" placeholder="-- Wybierz --" ng-model="product.status" required>
+                                <select name="role" class="form-control" placeholder="-- Wybierz --" ng-model="product.status">
                                     <option value="">-- Wybierz --</option>
                                     <option ng-repeat="status in statuses" ng-selected="{{status == product.status}}" value="{{status}}">{{status}}</option>
                                 </select>

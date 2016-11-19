@@ -29,7 +29,7 @@ class OrderProductController extends Controller {
 
         $success = true;
 
-        $data = OrderProduct::select('*')->where('order_id', $input['order_id']);
+        $data = OrderProduct::select('*')->where('order_id', $input['order_id'])->orderBy('id', 'desc');
         $data = $data->get()->toArray();
 
         return Response::json(compact('success', 'data'));
