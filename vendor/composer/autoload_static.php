@@ -272,6 +272,7 @@ class ComposerStaticInit816ae24ff7d1e3f0777d89b2c99aab9e
 
     public static $classMap = array (
         'AddColumnRoleToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2016_04_23_215117_add_column_role_to_users_table.php',
+        'CreateDashboardTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_06_183415_create_dashboard_table.php',
         'CreateOrderProductsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_15_153128_create_order_products_table.php',
         'CreateOrdersTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_15_101651_create_orders_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',

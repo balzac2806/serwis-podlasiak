@@ -31,6 +31,12 @@ interMap.config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: "front/views/dashboard/dashboard.tpl.html",
                     controller: 'dashboardController',
                 })
+                // Dashboard - Edit
+                .state('dashboardEdit', {
+                    url: "/dashboard/edit",
+                    templateUrl: "front/views/dashboard/editDashboard.tpl.html",
+                    controller: 'dashboardEditController',
+                })
                 // Lista - Brakujące Towary
                 .state('productsList', {
                     url: "/products/list",

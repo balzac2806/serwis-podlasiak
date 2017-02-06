@@ -34,6 +34,10 @@ Route::get('api/product/', 'ProductController@create');
 Route::get('api/product/{id}/', 'ProductController@show');
 Route::delete('api/product/{id}/', 'ProductController@destroy');
 
+// Dashboard 
+Route::post('api/dashboard/', 'DashboardController@store');
+Route::get('api/dashboard/', 'DashboardController@show');
+
 // Protokoły Zwrotu 
 Route::post('api/orders', 'OrderController@store');
 Route::put('api/orders/{id}', 'OrderController@store');
