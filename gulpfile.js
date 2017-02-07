@@ -46,6 +46,8 @@ gulp.task('default', function () {
             'products-list/productsControllers.js',
             'returners-list/returnersControllers.js',
             'returners-list/orderProductsControllers.js',
+            'corrections/correctionsControllers.js',
+            'providers/providersControllers.js',
         ], 'public/front/scripts/controllers.js', 'front/app/scripts');
 
         mix.scripts([

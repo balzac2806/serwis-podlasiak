@@ -49,6 +49,30 @@ interMap.config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: "front/views/products-list/product.tpl.html",
                     controller: 'productPageController',
                 })
+                // Lista - Dostawy
+                .state('providersList', {
+                    url: "/providers/list",
+                    templateUrl: "front/views/providers/providers.tpl.html",
+                    controller: 'providersListController',
+                })
+                // Widok - Dostawy
+                .state('providerView', {
+                    url: "/providers/:providerId",
+                    templateUrl: "front/views/providers/provider.tpl.html",
+                    controller: 'providerPageController',
+                })
+                // Lista - Poprawki
+                .state('correctionsList', {
+                    url: "/corrections/list",
+                    templateUrl: "front/views/corrections/corrections.tpl.html",
+                    controller: 'correctionsListController',
+                })
+                // Widok - Poprawki
+                .state('correctionsView', {
+                    url: "/corrections/:correctionId",
+                    templateUrl: "front/views/corrections/correction.tpl.html",
+                    controller: 'correctionPageController',
+                })
                 // Lista - Zwroty
                 .state('returnsList', {
                     url: "/returns/list",

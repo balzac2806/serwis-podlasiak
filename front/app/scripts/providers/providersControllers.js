@@ -1,10 +1,10 @@
-interMap.controller('productsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
+interMap.controller('providersListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
 
-        var url = '/api/product/';
+        var url = '/api/provider/';
 
         $scope.statuses = [
             'niezrealizowane',
@@ -18,7 +18,7 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             formatYear: 'yy',
             startingDay: 1,
         };
-        
+
         $rootScope.showButtonBar = false;
 
 
@@ -27,21 +27,21 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
         };
 
 
-        $scope.getProducts = function (sortParam, findParams) {
+        $scope.getProviders = function (sortParam, findParams) {
             return $http.get(url, {params: {sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
 
-        $scope.searchProducts = function (search) {
+        $scope.searchProviders = function (search) {
             var find = angular.copy(search);
-            if(angular.isDefined(find.date)) {
+            if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getProducts($scope.sort, find)
+            $scope.getProviders($scope.sort, find)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.products = response.data.data;
+                            $scope.providers = response.data.data;
                             $scope.isFind = false;
                         }
                     });
@@ -49,13 +49,12 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
         $scope.clearSearch = function () {
             delete $scope.search.name;
-            delete $scope.search.person;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getProducts($scope.sort)
+            $scope.getProviders($scope.sort)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.products = response.data.data;
+                            $scope.providers = response.data.data;
                         }
                     });
         };
@@ -63,7 +62,6 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
         $scope.$watch('search', function (newValue, oldValue) {
             $scope.check = false;
             if (angular.isDefined($scope.search.name)
-                    || angular.isDefined($scope.search.person)
                     || angular.isDefined($scope.search.date)) {
                 $scope.check = true;
             } else {
@@ -71,21 +69,21 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             }
         }, true);
 
-        $scope.getProducts()
+        $scope.getProviders()
                 .then(function (response) {
                     if (response.data.success) {
-                        $scope.products = response.data.data;
+                        $scope.providers = response.data.data;
                         $scope.sort = 'name';
                     }
                 });
 
-        $scope.addProduct = function () {
+        $scope.addProvider = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
-                templateUrl: '/front/views/products-list/components/modal/product.tpl.html',
-                controller: 'productModalController',
+                templateUrl: '/front/views/providers/components/modal/provider.tpl.html',
+                controller: 'providerModalController',
                 resolve: {
-                    product: function () {
+                    provider: function () {
                         return {
                         };
                     }
@@ -94,31 +92,31 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
             modalInstance.result.then(function (data) {
                 $state.go($state.current, {}, {reload: true});
-                growl.addSuccessMessage('Produkt został dodany pomyślnie !');
+                growl.addSuccessMessage('Dostawa została dodana pomyślnie !');
             });
         };
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getProducts(newVal)
+                $scope.getProviders(newVal)
                         .then(function (response) {
                             if (response.data.success) {
-                                $scope.products = response.data.data;
+                                $scope.providers = response.data.data;
                             }
                         });
             }
         });
 
-        $scope.removeProduct = function (id) {
+        $scope.removeProvider = function (id) {
             $http.delete(url + id).
                     success(function (data) {
                         if (data.success) {
-                            angular.forEach($scope.products, function (val, key) {
+                            angular.forEach($scope.providers, function (val, key) {
                                 if (val.id == id) {
-                                    $scope.products.splice(key, 1);
+                                    $scope.providers.splice(key, 1);
                                 }
                             });
-                            growl.addSuccessMessage('Produkt został usunięty !');
+                            growl.addSuccessMessage('Dostawa została usunięta !');
                         } else if (data.error) {
                             growl.addErrorMessage(data.error);
                         }
@@ -127,10 +125,10 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
     }]);
 
-interMap.controller('productPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
+interMap.controller('providerPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
 
-        if (angular.isDefined($stateParams.productId)) {
-            $scope.productId = $stateParams.productId;
+        if (angular.isDefined($stateParams.providerId)) {
+            $scope.providerId = $stateParams.providerId;
         }
 
         $scope.statuses = [
@@ -146,21 +144,26 @@ interMap.controller('productPageController', ['$scope', '$stateParams', '$rootSc
 
         $scope.isLoading = true;
 
-        $scope.product = {};
+        $scope.provider = {};
 
-        var url = '/api/product/';
+        var url = '/api/provider/';
 
-        if (angular.isDefined($scope.productId)) {
+        if (angular.isDefined($scope.providerId)) {
             $scope.editMode = true;
 
-            $http.get(url + $scope.productId)
+            $http.get(url + $scope.providerId)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.product = response.data.product;
-                            if ($scope.product.status == 1) {
-                                $scope.product.status = $scope.statuses[0];
+                            $scope.provider = response.data.provider;
+                            if (angular.isDefinedNotNull($scope.provider.date)) {
+                                $scope.provider.date = new Date($scope.provider.date);
                             } else {
-                                $scope.product.status = $scope.statuses[1];
+                                $scope.provider.date = null;
+                            }
+                            if ($scope.provider.status == 1) {
+                                $scope.provider.status = $scope.statuses[0];
+                            } else {
+                                $scope.provider.status = $scope.statuses[1];
                             }
                         } else {
                             growl.addErrorMessage(response.data.error);
@@ -173,21 +176,21 @@ interMap.controller('productPageController', ['$scope', '$stateParams', '$rootSc
 
 
         $scope.cancel = function () {
-            $state.go('productsList');
+            $state.go('providersList');
         };
 
-        $scope.saveProduct = function () {
+        $scope.saveProvider = function () {
             $scope.isLoading = true;
-            $http.put(url + $scope.product.id, $scope.product).
+            $http.put(url + $scope.provider.id, $scope.provider).
                     success(function (data) {
                         if (data.success) {
-                            $state.go('productsList');
-                            growl.addSuccessMessage('Produkt został zaktualizowany pomyślnie !');
+                            $state.go('providersList');
+                            growl.addSuccessMessage('Dostawa została zaktualizowana pomyślnie !');
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się zaktualizować produktu !');
+                                growl.addErrorMessage('Nie udało się zaktualizować dostawy !');
                             }
                         }
                     }).
@@ -195,12 +198,25 @@ interMap.controller('productPageController', ['$scope', '$stateParams', '$rootSc
                         $scope.isLoading = false;
                     });
         };
+        
+        $scope.popup = false;
+
+        $scope.dateOptions = {
+            dateDisabled: false,
+            formatYear: 'yy',
+            startingDay: 1,
+            startDate: new Date()
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
+        };
 
     }]);
 
-interMap.controller('productModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'product', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, product, $uibModalInstance) {
+interMap.controller('providerModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'provider', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, product, $uibModalInstance) {
 
-        $scope.product = {};
+        $scope.provider = {};
 
         $scope.statuses = [
             {
@@ -213,27 +229,21 @@ interMap.controller('productModalController', ['$scope', '$stateParams', '$rootS
             }
         ];
 
-        $scope.product.status = $scope.statuses[0];
-        $scope.product.person = $rootScope.permissions.user.name;
+        $scope.provider.status = $scope.statuses[0];
 
-        if (angular.isDefined(product.name)) {
-            $scope.productId = product.id;
-            $scope.product = product;
-        }
-
-        var url = '/api/product/';
+        var url = '/api/provider/';
 
         $scope.save = function () {
             $scope.isLoading = true;
-            $http.post(url, $scope.product).
+            $http.post(url, $scope.provider).
                     success(function (data) {
                         if (data.success) {
-                            $uibModalInstance.close(data.product);
+                            $uibModalInstance.close(data.provider);
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się dodać produktu !');
+                                growl.addErrorMessage('Nie udało się dodać dostawy !');
                             }
                         }
                     }).
@@ -244,6 +254,19 @@ interMap.controller('productModalController', ['$scope', '$stateParams', '$rootS
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+        };
+        
+        $scope.popup = false;
+
+        $scope.dateOptions = {
+            dateDisabled: false,
+            formatYear: 'yy',
+            startingDay: 1,
+            startDate: new Date()
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
     }]);

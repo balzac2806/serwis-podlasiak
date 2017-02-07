@@ -34,6 +34,20 @@ Route::get('api/product/', 'ProductController@create');
 Route::get('api/product/{id}/', 'ProductController@show');
 Route::delete('api/product/{id}/', 'ProductController@destroy');
 
+// Dostawy 
+Route::post('api/provider/', 'ProviderController@store');
+Route::put('api/provider/{id}/', 'ProviderController@store');
+Route::get('api/provider/', 'ProviderController@create');
+Route::get('api/provider/{id}/', 'ProviderController@show');
+Route::delete('api/provider/{id}/', 'ProviderController@destroy');
+
+// Poprawki 
+Route::post('api/correction/', 'CorrectionController@store');
+Route::put('api/correction/{id}/', 'CorrectionController@store');
+Route::get('api/correction/', 'CorrectionController@create');
+Route::get('api/correction/{id}/', 'CorrectionController@show');
+Route::delete('api/correction/{id}/', 'CorrectionController@destroy');
+
 // Dashboard 
 Route::post('api/dashboard/', 'DashboardController@store');
 Route::get('api/dashboard/', 'DashboardController@show');

@@ -1,4 +1,4 @@
-interMap.controller('productsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
+interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
 
         $scope.sortType = 'created_at';
@@ -127,7 +127,7 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
     }]);
 
-interMap.controller('productPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
+interMap.controller('correctionPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
 
         if (angular.isDefined($stateParams.productId)) {
             $scope.productId = $stateParams.productId;
