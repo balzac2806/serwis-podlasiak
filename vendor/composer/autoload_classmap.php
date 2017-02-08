@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddColumnRoleToUsersTable' => $baseDir . '/database/migrations/2016_04_23_215117_add_column_role_to_users_table.php',
+    'CreateCorrectionsTable' => $baseDir . '/database/migrations/2017_02_07_185540_create_corrections_table.php',
     'CreateDashboardTable' => $baseDir . '/database/migrations/2017_02_06_183415_create_dashboard_table.php',
     'CreateOrderProductsTable' => $baseDir . '/database/migrations/2016_10_15_153128_create_order_products_table.php',
     'CreateOrdersTable' => $baseDir . '/database/migrations/2016_10_15_101651_create_orders_table.php',

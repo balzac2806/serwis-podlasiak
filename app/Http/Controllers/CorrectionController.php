@@ -6,20 +6,24 @@ use App\Http\Requests,
     Illuminate\Support\Facades\Response,
     Illuminate\Support\Facades\Input,
     Illuminate\Support\Facades\Validator,
-    App\Provider,
+    App\Correction,
     Illuminate\Support\Facades\DB;
 
-class ProviderController extends Controller {
+class CorrectionController extends Controller {
 
     protected function validator(array $data) {
         return Validator::make($data, [
                     'name' => 'required|max:255',
+                    'link' => 'required',
+                    'description' => 'required',
         ]);
     }
 
     protected function validatorUpdate(array $data) {
         return Validator::make($data, [
                     'name' => 'required|max:255',
+                    'link' => 'required',
+                    'description' => 'required',
         ]);
     }
 
@@ -29,13 +33,13 @@ class ProviderController extends Controller {
             $find = json_decode($input['find'], true);
         }
         $success = true;
-        $data = Provider::select('*');
+        $data = Correction::select('*');
         if (!empty($find)) {
             if (!empty($find['name'])) {
                 $data = $data->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($find['name']) . '%']);
             }
             if (!empty($find['date'])) {
-                $data = $data->whereBetween('date', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
+                $data = $data->whereBetween('created_at', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
             }
         }
         $data = $data->orderBy('id', 'desc')->get()->toArray();
@@ -46,20 +50,20 @@ class ProviderController extends Controller {
     public function store($id = null) {
         $input = Input::all();
         $input['status'] = $input['status']['id'];
-        
+
         $success = false;
-        
+
         $valid = $this->validator($input);
         if ($valid->fails()) {
             $error = $valid->errors();
             return Response::json(compact('success', 'error'));
         }
 
-        $provider = Provider::createOrUpdate($input, $id);
+        $correction = Correction::createOrUpdate($input, $id);
 
         $success = true;
 
-        return Response::json(compact('success', 'provider'));
+        return Response::json(compact('success', 'correction'));
     }
 
     /**
@@ -69,30 +73,29 @@ class ProviderController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id) {
-        $provider = Provider::findById($id);
+        $correction = Correction::findById($id);
 
-        if (empty($provider)) {
+        if (empty($correction)) {
             $error = 'Upss, wystąpił błąd! Spróbuj później.';
             return Response::json(compact('success', 'error'));
         }
-        $provider['date'] = date('Y-m-d', strtotime($provider['date']));
 
         $success = true;
 
-        return Response::json(compact('success', 'provider'));
+        return Response::json(compact('success', 'correction'));
     }
 
     public function destroy($id) {
-        $provider = Provider::findById($id);
+        $correction = Correction::findById($id);
 
         $success = false;
 
-        if (empty($provider)) {
+        if (empty($correction)) {
             $error = 'Upss, wystąpił błąd! Spróbuj później.';
             return Response::json(compact('success', 'error'));
         }
 
-        $provider->delete();
+        $correction->delete();
 
         $success = true;
 

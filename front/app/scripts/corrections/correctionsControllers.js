@@ -4,44 +4,33 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
 
-        var url = '/api/product/';
+        var url = '/api/correction/';
 
         $scope.statuses = [
             'niezrealizowane',
             'zrealizowane'
         ];
 
-        $scope.popup = false;
-
-        $scope.dateOptions = {
-            dateDisabled: false,
-            formatYear: 'yy',
-            startingDay: 1,
-        };
-        
-        $rootScope.showButtonBar = false;
-
-
         $scope.startDate = function () {
             $scope.popup = true;
         };
 
 
-        $scope.getProducts = function (sortParam, findParams) {
+        $scope.getCorrections = function (sortParam, findParams) {
             return $http.get(url, {params: {sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
 
-        $scope.searchProducts = function (search) {
+        $scope.searchCorrections = function (search) {
             var find = angular.copy(search);
-            if(angular.isDefined(find.date)) {
+            if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getProducts($scope.sort, find)
+            $scope.getCorrections($scope.sort, find)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.products = response.data.data;
+                            $scope.corrections = response.data.data;
                             $scope.isFind = false;
                         }
                     });
@@ -49,13 +38,12 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
 
         $scope.clearSearch = function () {
             delete $scope.search.name;
-            delete $scope.search.person;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getProducts($scope.sort)
+            $scope.getCorrections($scope.sort)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.products = response.data.data;
+                            $scope.corrections = response.data.data;
                         }
                     });
         };
@@ -63,7 +51,6 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
         $scope.$watch('search', function (newValue, oldValue) {
             $scope.check = false;
             if (angular.isDefined($scope.search.name)
-                    || angular.isDefined($scope.search.person)
                     || angular.isDefined($scope.search.date)) {
                 $scope.check = true;
             } else {
@@ -71,21 +58,21 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
             }
         }, true);
 
-        $scope.getProducts()
+        $scope.getCorrections()
                 .then(function (response) {
                     if (response.data.success) {
-                        $scope.products = response.data.data;
+                        $scope.corrections = response.data.data;
                         $scope.sort = 'name';
                     }
                 });
 
-        $scope.addProduct = function () {
+        $scope.addCorrection = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
-                templateUrl: '/front/views/products-list/components/modal/product.tpl.html',
-                controller: 'productModalController',
+                templateUrl: '/front/views/corrections/components/modal/correction.tpl.html',
+                controller: 'correctionModalController',
                 resolve: {
-                    product: function () {
+                    correction: function () {
                         return {
                         };
                     }
@@ -94,31 +81,31 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
 
             modalInstance.result.then(function (data) {
                 $state.go($state.current, {}, {reload: true});
-                growl.addSuccessMessage('Produkt został dodany pomyślnie !');
+                growl.addSuccessMessage('Poprawka została dodana pomyślnie !');
             });
         };
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getProducts(newVal)
+                $scope.getCorrections(newVal)
                         .then(function (response) {
                             if (response.data.success) {
-                                $scope.products = response.data.data;
+                                $scope.corrections = response.data.data;
                             }
                         });
             }
         });
 
-        $scope.removeProduct = function (id) {
+        $scope.removeCorrection = function (id) {
             $http.delete(url + id).
                     success(function (data) {
                         if (data.success) {
-                            angular.forEach($scope.products, function (val, key) {
+                            angular.forEach($scope.corrections, function (val, key) {
                                 if (val.id == id) {
-                                    $scope.products.splice(key, 1);
+                                    $scope.corrections.splice(key, 1);
                                 }
                             });
-                            growl.addSuccessMessage('Produkt został usunięty !');
+                            growl.addSuccessMessage('Poprawka została usunięta !');
                         } else if (data.error) {
                             growl.addErrorMessage(data.error);
                         }
@@ -129,8 +116,8 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
 
 interMap.controller('correctionPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
 
-        if (angular.isDefined($stateParams.productId)) {
-            $scope.productId = $stateParams.productId;
+        if (angular.isDefined($stateParams.correctionId)) {
+            $scope.correctionId = $stateParams.correctionId;
         }
 
         $scope.statuses = [
@@ -146,21 +133,26 @@ interMap.controller('correctionPageController', ['$scope', '$stateParams', '$roo
 
         $scope.isLoading = true;
 
-        $scope.product = {};
+        $scope.correction = {};
 
-        var url = '/api/product/';
+        var url = '/api/correction/';
 
-        if (angular.isDefined($scope.productId)) {
+        if (angular.isDefined($scope.correctionId)) {
             $scope.editMode = true;
 
-            $http.get(url + $scope.productId)
+            $http.get(url + $scope.correctionId)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.product = response.data.product;
-                            if ($scope.product.status == 1) {
-                                $scope.product.status = $scope.statuses[0];
+                            $scope.correction = response.data.correction;
+                            if (angular.isDefinedNotNull($scope.correction.date)) {
+                                $scope.correction.date = new Date($scope.correction.date);
                             } else {
-                                $scope.product.status = $scope.statuses[1];
+                                $scope.correction.date = null;
+                            }
+                            if ($scope.correction.status == 1) {
+                                $scope.correction.status = $scope.statuses[0];
+                            } else {
+                                $scope.correction.status = $scope.statuses[1];
                             }
                         } else {
                             growl.addErrorMessage(response.data.error);
@@ -173,21 +165,21 @@ interMap.controller('correctionPageController', ['$scope', '$stateParams', '$roo
 
 
         $scope.cancel = function () {
-            $state.go('productsList');
+            $state.go('correctionsList');
         };
 
-        $scope.saveProduct = function () {
+        $scope.saveCorrection = function () {
             $scope.isLoading = true;
-            $http.put(url + $scope.product.id, $scope.product).
+            $http.put(url + $scope.correction.id, $scope.correction).
                     success(function (data) {
                         if (data.success) {
-                            $state.go('productsList');
-                            growl.addSuccessMessage('Produkt został zaktualizowany pomyślnie !');
+                            $state.go('correctionsList');
+                            growl.addSuccessMessage('Poprawka została zaktualizowana pomyślnie !');
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się zaktualizować produktu !');
+                                growl.addErrorMessage('Nie udało się zaktualizować poprawki !');
                             }
                         }
                     }).
@@ -195,12 +187,12 @@ interMap.controller('correctionPageController', ['$scope', '$stateParams', '$roo
                         $scope.isLoading = false;
                     });
         };
-
+        
     }]);
 
-interMap.controller('productModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'product', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, product, $uibModalInstance) {
+interMap.controller('correctionModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'correction', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, product, $uibModalInstance) {
 
-        $scope.product = {};
+        $scope.correction = {};
 
         $scope.statuses = [
             {
@@ -213,27 +205,21 @@ interMap.controller('productModalController', ['$scope', '$stateParams', '$rootS
             }
         ];
 
-        $scope.product.status = $scope.statuses[0];
-        $scope.product.person = $rootScope.permissions.user.name;
+        $scope.correction.status = $scope.statuses[0];
 
-        if (angular.isDefined(product.name)) {
-            $scope.productId = product.id;
-            $scope.product = product;
-        }
-
-        var url = '/api/product/';
+        var url = '/api/correction/';
 
         $scope.save = function () {
             $scope.isLoading = true;
-            $http.post(url, $scope.product).
+            $http.post(url, $scope.correction).
                     success(function (data) {
                         if (data.success) {
-                            $uibModalInstance.close(data.product);
+                            $uibModalInstance.close(data.correction);
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się dodać produktu !');
+                                growl.addErrorMessage('Nie udało się dodać poprawki !');
                             }
                         }
                     }).

@@ -1,24 +1,33 @@
 <div class="wrapper-md">
     <div class="panel panel-default">
-        <div class="panel-heading">Edycja Produktu</div>
+        <div class="panel-heading">Edycja Poprawki</div>
         <div class="panel-body">
             <div class="form-group">
-                <form name="productForm">
+                <form name="correctionForm">
                     <fieldset>
                         <div class="form-group">
                             <div class="form-group">
-                                <label class="control-label" for="name">Nazwa Produktu</label>
-                                <input class="form-control" name="name" type="text" ng-model="product.name"/>
+                                <label class="control-label" for="name">Nazwa Poprawki</label>
+                                <input class="form-control" name="name" type="text" ng-model="correction.name"/>
                                 <label ng-show="formErrors.name" class="alert alert-danger">Pole nazwa produktu jest wymagane!</label>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="person">Osoba Dodająca</label>
-                                <input class="form-control" name="person" type="text" ng-model="product.person"/>
-                                <label ng-show="formErrors.person" class="alert alert-danger">Pole osoba dodająca jest wymagane!</label>
+                                <div class="form-group">
+                                    <label class="control-label" for="link">Link</label>
+                                    <input class="form-control" name="link" type="text" ng-model="correction.link"/>
+                                    <label ng-show="formErrors.link" class="alert alert-danger">Pole link jest wymagane!</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label class="control-label" for="description">Opis</label>
+                                    <textarea class="form-control" name="description" type="text" ng-model="correction.description"></textarea>
+                                    <label ng-show="formErrors.description" class="alert alert-danger">Pole opis jest wymagane!</label>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="status">Status</label>
-                                <select class="form-control" placeholder="-- Wybierz --" ng-options="status as status.name for status in statuses" ng-model="product.status">
+                                <select class="form-control" placeholder="-- Wybierz --" ng-options="status as status.name for status in statuses" ng-model="correction.status">
                                 </select>
                             </div>
                         </div>
@@ -31,7 +40,7 @@
                         <button ng-click="cancel()" class="btn btn-default">Wróć</button>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                        <button ng-click="saveProduct(user)" class="btn btn-primary" ng-disabled="productForm.$invalid">Zapisz</button>
+                        <button ng-click="saveCorrection(correction)" class="btn btn-primary" ng-disabled="correctionForm.$invalid">Zapisz</button>
                     </div>
                 </div>
             </div>

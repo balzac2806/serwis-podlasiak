@@ -10,12 +10,6 @@
                 </div>
                 <div class="col-sm-12 col-md-3">
                     <div class="form-group activites-select">
-                        <label for="person">Osoba</label>
-                        <input type="text" name="person" class="form-control" ng-model="search.person" required/>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-group activites-select">
                         <label for="person">Data Dodania</label>
                         <p class="input-group">
                             <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="search.date" 
@@ -31,7 +25,7 @@
                         <div class="form-group">
                             <label>&nbsp;</label>
                             <div class="btn-group btn-group-justified">
-                                <a class="btn btn-info rounded" ng-click="searchProducts(search)"><i class="fa fa-search"></i></a>
+                                <a class="btn btn-info rounded" ng-click="searchCorrections(search)"><i class="fa fa-search"></i></a>
                                 <a class="btn btn-danger rounded" ng-if="check" ng-click="clearSearch()"><i class="fa fa-times"></i></a>
                             </div>
                         </div>
@@ -43,7 +37,7 @@
         <div class="form-group text-center">
             <h3>
                 <strong>
-                    Lista - Brakujące Towary <button ng-if="permissions.user.role != 'viewer'" class="btn btn-success pull-right" ng-click="addProduct()">Dodaj</button>
+                    Lista - Poprawki <button ng-if="permissions.user.role != 'viewer'" class="btn btn-success pull-right" ng-click="addCorrection()">Dodaj</button>
                 </strong>
             </h3>
         </div>
@@ -55,25 +49,25 @@
                     <th>
                         <span href="#" ng-click="sortType = 'name';
                             sortReverse = !sortReverse">
-                            Towar
+                            Nazwa
                             <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
                     <th>
-                        <span ng-click="sortType = 'created_at';
+                        <span href="#" ng-click="sortType = 'link';
                             sortReverse = !sortReverse">
-                            Data
-                            <span ng-show="sortType == 'created_at' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'created_at' && sortReverse" class="fa fa-caret-up"></span>
+                            Link
+                            <span ng-show="sortType == 'link' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'link' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
                     <th>
-                        <span ng-click="sortType = 'person';
+                        <span ng-click="sortType = 'date';
                             sortReverse = !sortReverse">
-                            Dodał
-                            <span ng-show="sortType == 'person' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'person' && sortReverse" class="fa fa-caret-up"></span>
+                            Data
+                            <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
                     <th>
@@ -90,30 +84,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="" ng-class="{'alert-danger': val.status == 1}" ng-repeat="(key, val) in products | orderBy: sortType: sortReverse">
+                <tr class="" ng-class="{'alert-danger': val.status == 1}" ng-repeat="(key, val) in corrections | orderBy: sortType: sortReverse">
                     <td>
                         {{val.name}}
+                    </td>
+                    <td>
+                        {{val.link}}
                     </td>
                     <td>
                         {{val.created_at|| '-'}}
                     </td>
                     <td>
-                        {{val.person}}
-                    </td>
-                    <td>
                         {{statuses[val.status - 1 ]}}
                     </td>
                     <td ng-if="permissions.user.role != 'user'">
-                        <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń towar" ng-really-message="Czy na pewno chcesz usunąć towar?" ng-really-click="removeProduct(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
+                        <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń poprawkę" ng-really-message="Czy na pewno chcesz usunąć poprawkę?" ng-really-click="removeCorrection(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
                         </span>
-                        <span ng-if="permissions.user.role != 'user' && permissions.user.role != 'viewer'" ui-sref="productView({productId: val.id})"style="float: right" class="btn btn-link btn-sm">
+                        <span ng-if="permissions.user.role != 'user' && permissions.user.role != 'viewer'" ui-sref="correctionView({correctionId: val.id})"style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-info btn-addon btn-actions"><i class="fa fa-pencil"></i> Edytuj</button>
                         </span>
                     </td>
                 </tr>
-                <tr ng-if="products.length == 0">
-                    <td colspan="6" class="text-center">
+                <tr ng-if="corrections.length == 0">
+                    <td colspan="5" class="text-center">
                         <h3>Brak Wyników !</h3>
                     </td>
                 </tr>

@@ -68,7 +68,7 @@ interMap.config(['$stateProvider', '$urlRouterProvider',
                     controller: 'correctionsListController',
                 })
                 // Widok - Poprawki
-                .state('correctionsView', {
+                .state('correctionView', {
                     url: "/corrections/:correctionId",
                     templateUrl: "front/views/corrections/correction.tpl.html",
                     controller: 'correctionPageController',
