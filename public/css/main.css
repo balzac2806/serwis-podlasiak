@@ -190,6 +190,10 @@ td, th {
     #page-wrapper {
         padding-left: 0px !important;
     }
+    .print-release {
+        display: block !important;
+        text-align: center;
+    }
 }
 @font-face {
     font-family: "Glyphicons Halflings";
@@ -7005,4 +7009,9 @@ td {
 
 .alert-danger {
     color: black !important;
+}
+
+.print-release {
+    display: none;
+    text-align: center;
 }

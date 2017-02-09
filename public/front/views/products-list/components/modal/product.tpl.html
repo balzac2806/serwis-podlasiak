@@ -16,6 +16,10 @@
                         <input class="form-control" disabled name="person" type="text" ng-model="product.person"/>
                         <label ng-show="formErrors.person" class="alert alert-danger">Pole osoba dodająca jest wymagane!</label>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label" for="subiect">Subiekt</label>
+                        <input class="form-control" name="subiect" type="text" ng-model="product.subiect" ng-minlength="9" ng-maxlength="9"/>
+                    </div>
                 </div>
             </fieldset>
         </form>

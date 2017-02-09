@@ -16,6 +16,7 @@ class Product extends Authenticatable {
         'name',
         'person',
         'status',
+        'subiect',
         'updated_at'
     ];
 
@@ -27,9 +28,9 @@ class Product extends Authenticatable {
     protected $hidden = [];
 
     public function getCreatedAtAttribute($value) {
-        if (!empty($value)) {
-            $value = date('Y-m-d', strtotime($value));
-        }
+//        if (!empty($value)) {
+//            $value = date('Y-m-d', strtotime($value));
+//        }
         return $value;
     }
 
