@@ -16,6 +16,7 @@ class ProductController extends Controller {
         return Validator::make($data, [
                     'name' => 'required',
                     'person' => 'required|max:255',
+                    'subiect' => 'required',
         ]);
     }
 
