@@ -18,7 +18,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="subiect">Subiekt</label>
-                                <input class="form-control" name="subiect" type="text" ng-model="product.subiect" ng-pattern="/^([a-z0-9]{8,10})$/" ng-minlength="8" ng-maxlength="10"/>
+                                <input class="form-control" name="subiect" type="text" ng-model="product.subiect" ng-pattern="/^([a-zA-Z0-9-]{8,10})$/" ng-minlength="8" ng-maxlength="10"/>
                                 <label ng-show="productForm.subiect.$invalid" class="alert alert-danger">Pole subiekt wymaga od 8 do 10 znaków!</label>
                             </div>
                             <div class="form-group">
