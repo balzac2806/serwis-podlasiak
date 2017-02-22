@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <button ng-if="permissions.user.role == 'admin'" class="btn btn-success pull-right" ui-sref="dashboardEdit">Edytuj</button>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" ng-if="permissions.user.role != 'viewer'">
         <div ng-bind-html="dashboard.content"></div>
         <hr/>
     </div>
