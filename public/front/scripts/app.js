@@ -49,6 +49,18 @@ interMap.config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: "front/views/products-list/product.tpl.html",
                     controller: 'productPageController',
                 })
+                // Lista - Zwroty Pieniędzy
+                .state('moneyReturns', {
+                    url: "/cash-returns/list",
+                    templateUrl: "front/views/money-returns/returns.tpl.html",
+                    controller: 'moneyReturnsListController',
+                })
+                // Widok - Brakujące Towary
+                .state('moneyReturnView', {
+                    url: "/cash-returns/:returnId",
+                    templateUrl: "front/views/money-returns/return.tpl.html",
+                    controller: 'moneyReturnPageController',
+                })
                 // Lista - Dostawy
                 .state('providersList', {
                     url: "/providers/list",

@@ -1,0 +1,123 @@
+<div class="row">
+    <div class="panel-body">
+        <form name="searchForm">
+            <fieldset>
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-group activites-select">
+                        <label for="person">Kto</label>
+                        <input type="text" name="person" class="form-control" ng-model="search.person" required/>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-group activites-select">
+                        <label for="subiect">Komu</label>
+                        <input type="text" name="subiect" class="form-control" ng-model="search.subiect" required/>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <div class="form-group activites-select">
+                        <label for="person">Data</label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="search.date" 
+                                   is-open="popup" datepicker-options="dateOptions" show-button-bar="false" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default button-picker" ng-click="startDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="btn-group btn-group-justified">
+                                <a class="btn btn-info rounded" ng-click="searchMoneyReturns(search)"><i class="fa fa-search"></i></a>
+                                <a class="btn btn-danger rounded" ng-if="check" ng-click="clearSearch()"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                    </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="panel-body">
+        <div class="form-group text-center">
+            <h3>
+                <strong>
+                    Lista - Zwroty Pieniędzy <button ng-if="permissions.user.role != 'viewer'" class="btn btn-success pull-right" ng-click="addMoneyReturn()">Dodaj</button>
+                </strong>
+            </h3>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover" ng-if="!isLoading">
+            <thead>
+                <tr>
+                    <th>
+                        <span href="#" ng-click="sortType = 'person';
+                            sortReverse = !sortReverse">
+                            Kto
+                            <span ng-show="sortType == 'person' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'person' && sortReverse" class="fa fa-caret-up"></span>
+                        </span>
+                    </th>
+                    <th>
+                        <span ng-click="sortType = 'subiect';
+                            sortReverse = !sortReverse">
+                            Komu
+                            <span ng-show="sortType == 'subiect' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'subiect' && sortReverse" class="fa fa-caret-up"></span>
+                        </span>
+                    </th>
+                     <th>
+                        <span ng-click="sortType = 'cost';
+                            sortReverse = !sortReverse">
+                            Ile
+                            <span ng-show="sortType == 'cost' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'cost' && sortReverse" class="fa fa-caret-up"></span>
+                        </span>
+                    </th>
+                    <th>
+                        <span ng-click="sortType = 'date';
+                            sortReverse = !sortReverse">
+                            Data
+                            <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
+                        </span>
+                    </th>
+                    <th ng-if="permissions.user.role != 'user' && permissions.user.role != 'viewer'" class="text-center col-md-2">
+                        Akcje
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="" ng-class="{'alert-danger': val.status == 1}" ng-repeat="(key, val) in moneyReturns | orderBy: sortType: sortReverse"> 
+                    <td>
+                        {{val.person}}
+                    </td>
+                    <td>
+                        {{val.subiect}}
+                    </td>
+                    <td>
+                        {{val.cost}}
+                    </td>
+                    <td>
+                        {{val.date|| '-'}}
+                    </td>
+                    <td ng-if="permissions.user.role != 'user'">
+                        <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń" ng-really-message="Czy na pewno chcesz usunąć zwrot?" ng-really-click="removeMoneyReturn(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
+                            <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
+                        </span>
+                        <span ng-if="permissions.user.role != 'user' && permissions.user.role != 'viewer'" ui-sref="moneyReturnView({returnId: val.id})" style="float: right" class="btn btn-link btn-sm">
+                            <button class="btn btn-info btn-addon btn-actions"><i class="fa fa-pencil"></i> Edytuj</button>
+                        </span>
+                    </td>
+                </tr>
+                <tr ng-if="moneyReturns.length == 0">
+                    <td colspan="5" class="text-center">
+                        <h3>Brak Wyników !</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Edycja Zwrotu Pieniędzy</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <form name="moneyReturnForm">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label" for="person">Kto</label>
+                                <input class="form-control" name="person" type="text" ng-model="moneyReturn.person"/>
+                                <label ng-show="formErrors.person" class="alert alert-danger">Pole kto jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="subiect">Komu</label>
+                                <input class="form-control" name="subiect" type="text" ng-model="moneyReturn.subiect"/>
+                                <label ng-show="formErrors.subiect" class="alert alert-danger">Pole komu jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="cost">Ile</label>
+                                <input class="form-control" name="subiect" type="text" ng-model="moneyReturn.cost"/>
+                                <label ng-show="formErrors.cost" class="alert alert-danger">Pole ile jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="date">Data</label>
+                                <p class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="moneyReturn.date" 
+                                           is-open="popup" datepicker-options="dateOptions" show-button-bar="false" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default button-picker" ng-click="startDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                                <label ng-show="formErrors.date" class="alert alert-danger">Pole data jest wymagane!</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <button ng-click="cancel()" class="btn btn-default">Wróć</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                        <button ng-click="saveMoneyReturn(user)" class="btn btn-primary" ng-disabled="moneyReturnForm.$invalid">Zapisz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

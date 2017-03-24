@@ -1,19 +1,10 @@
-interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
+interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
 
-        $scope.sortType = 'id';
+        $scope.sortType = 'created_at';
         $scope.sortReverse = true;
 
-        var url = '/api/orders/';
-
-        $scope.statuses = [
-            'niezrealizowane',
-            'zrealizowane'
-        ];
-        
-        $scope.search = {};
-        $scope.companies = ['Podlasiak', 'Fonti', 'Wszystkie'];
-        $scope.search.company = $scope.companies[2];
+        var url = '/api/money-returns/';
 
         $scope.popup = false;
 
@@ -23,53 +14,51 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             startingDay: 1,
         };
 
+        $rootScope.showButtonBar = false;
+
+
         $scope.startDate = function () {
             $scope.popup = true;
         };
 
-        $scope.getOrders = function (sortParam, findParams) {
+
+        $scope.getMoneyReturns = function (sortParam, findParams) {
             return $http.get(url, {params: {sort: sortParam, find: findParams}});
         };
 
-        $scope.searchOrders = function (search) {
+        $scope.search = {};
+
+        $scope.searchMoneyReturns = function (search) {
             var find = angular.copy(search);
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getOrders($scope.sort, find)
+            $scope.getMoneyReturns($scope.sort, find)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.returners = response.data.data;
+                            $scope.moneyReturns = response.data.data;
                             $scope.isFind = false;
                         }
                     });
         };
 
         $scope.clearSearch = function () {
-            delete $scope.search.name;
             delete $scope.search.person;
+            delete $scope.search.subiect;
             delete $scope.search.date;
-            delete $scope.search.sender;
-            delete $scope.search.number;
-            delete $scope.search.document;
             $scope.search = {};
-            $scope.search.company = $scope.companies[2];
-            $scope.getOrders($scope.sort)
+            $scope.getMoneyReturns($scope.sort)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.returners = response.data.data;
+                            $scope.moneyReturns = response.data.data;
                         }
                     });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
             $scope.check = false;
-            if (angular.isDefined($scope.search.name)
+            if (angular.isDefined($scope.search.subiect)
                     || angular.isDefined($scope.search.person)
-                    || angular.isDefined($scope.search.sender)
-                    || angular.isDefined($scope.search.number)
-                    || angular.isDefined($scope.search.company)
-                    || angular.isDefined($scope.search.document)
                     || angular.isDefined($scope.search.date)) {
                 $scope.check = true;
             } else {
@@ -77,21 +66,21 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             }
         }, true);
 
-        $scope.getOrders()
+        $scope.getMoneyReturns()
                 .then(function (response) {
                     if (response.data.success) {
-                        $scope.returners = response.data.data;
-                        $scope.sort = 'name';
+                        $scope.moneyReturns = response.data.data;
+                        $scope.sort = 'updated_at';
                     }
                 });
 
-        $scope.addOrder = function () {
+        $scope.addMoneyReturn = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
-                templateUrl: '/front/views/returns-list/components/modal/return.tpl.html',
-                controller: 'returnModalController',
+                templateUrl: '/front/views/money-returns/components/modal/return.tpl.html',
+                controller: 'moneyReturnModalController',
                 resolve: {
-                    order: function () {
+                    moneyReturn: function () {
                         return {
                         };
                     }
@@ -100,31 +89,31 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
 
             modalInstance.result.then(function (data) {
                 $state.go($state.current, {}, {reload: true});
-                growl.addSuccessMessage('Protokół zwrotu został dodany pomyślnie !');
+                growl.addSuccessMessage('Zwrot pieniędzy został dodany pomyślnie !');
             });
         };
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getOrders(newVal)
+                $scope.getMoneyReturns(newVal)
                         .then(function (response) {
                             if (response.data.success) {
-                                $scope.returners = response.data.data;
+                                $scope.moneyReturns = response.data.data;
                             }
                         });
             }
         });
 
-        $scope.removeOrder = function (id) {
+        $scope.removeMoneyReturn = function (id) {
             $http.delete(url + id).
                     success(function (data) {
                         if (data.success) {
-                            angular.forEach($scope.returners, function (val, key) {
+                            angular.forEach($scope.moneyReturns, function (val, key) {
                                 if (val.id == id) {
-                                    $scope.returners.splice(key, 1);
+                                    $scope.moneyReturns.splice(key, 1);
                                 }
                             });
-                            growl.addSuccessMessage('Protokół zwrotu został usunięty !');
+                            growl.addSuccessMessage('Zwrot pieniędzy został usunięty !');
                         } else if (data.error) {
                             growl.addErrorMessage(data.error);
                         }
@@ -133,33 +122,17 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
 
     }]);
 
-interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
+interMap.controller('moneyReturnPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
 
         if (angular.isDefined($stateParams.returnId)) {
             $scope.returnId = $stateParams.returnId;
         }
 
-        $scope.statuses = [
-            {
-                id: 1,
-                name: 'niezrealizowane'
-            },
-            {
-                id: 2,
-                name: 'zrealizowane'
-            }
-        ];
-
-        $scope.companies = [
-            'Podlasiak',
-            'Fonti'
-        ];
-
         $scope.isLoading = true;
 
-        $scope.order = {};
+        $scope.moneyReturn = {};
 
-        var url = '/api/orders/';
+        var url = '/api/money-returns/';
 
         if (angular.isDefined($scope.returnId)) {
             $scope.editMode = true;
@@ -167,23 +140,12 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
             $http.get(url + $scope.returnId)
                     .then(function (response) {
                         if (response.data.success) {
-                            $scope.order = response.data.order;
-                            if (angular.isDefined($scope.order.date)) {
-                                $scope.order.date = new Date($scope.order.date);
+                            $scope.moneyReturn = response.data.data;
+                            if (angular.isDefined($scope.moneyReturn.date)) {
+                                $scope.moneyReturn.date = new Date($scope.moneyReturn.date);
                             } else {
-                                $scope.order.date = new Date();
+                                $scope.moneyReturn.date = new Date();
                             }
-                            if (angular.isDefined($scope.order.created_at)) {
-                                $scope.order.created_at = new Date($scope.order.created_at);
-                            } else {
-                                $scope.order.created_at = new Date();
-                            }
-                            if ($scope.order.status == 1) {
-                                $scope.order.status = $scope.statuses[0];
-                            } else {
-                                $scope.order.status = $scope.statuses[1];
-                            }
-                            $scope.order.authoriser = $rootScope.permissions.user.name;
                         } else {
                             growl.addErrorMessage(response.data.error);
                         }
@@ -193,23 +155,22 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
                     });
         }
 
-
         $scope.cancel = function () {
-            $state.go('returnsList');
+            $state.go('moneyReturns');
         };
 
-        $scope.saveOrder = function () {
+        $scope.saveMoneyReturn = function () {
             $scope.isLoading = true;
-            $http.put(url + $scope.order.id, $scope.order).
+            $http.put(url + $scope.moneyReturn.id, $scope.moneyReturn).
                     success(function (data) {
                         if (data.success) {
-                            $state.go('returnsList');
-                            growl.addSuccessMessage('Protokół zwrotu został zaktualizowany pomyślnie !');
+                            $state.go('moneyReturns');
+                            growl.addSuccessMessage('Zwrot pieniędzy został zaktualizowany pomyślnie !');
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się zaktualizować protokołu zwrotu !');
+                                growl.addErrorMessage('Nie udało się zaktualizować zwrotu pieniędzy !');
                             }
                         }
                     }).
@@ -232,35 +193,30 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
 
     }]);
 
-interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'order', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, order, $uibModalInstance) {
+interMap.controller('moneyReturnModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'moneyReturn', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, moneyReturn, $uibModalInstance) {
 
-        $scope.order = {};
+        $scope.moneyReturn = {};
 
-        $scope.companies = [
-            'Podlasiak',
-            'Fonti'
-        ];
+        $scope.moneyReturn.person = $rootScope.permissions.user.name;
 
-        if (angular.isDefined(order.name)) {
-            $scope.orderId = order.id;
-            $scope.order = order;
+        if (angular.isDefined(moneyReturn.subiect)) {
+            $scope.returnId = moneyReturn.id;
+            $scope.moneyReturn = moneyReturn;
         }
-        $scope.order.created_at = new Date();
-        $scope.order.company = $scope.companies[0];
 
-        var url = '/api/orders/';
+        var url = '/api/money-returns/';
 
         $scope.save = function () {
             $scope.isLoading = true;
-            $http.post(url, $scope.order).
+            $http.post(url, $scope.moneyReturn).
                     success(function (data) {
                         if (data.success) {
-                            $uibModalInstance.close(data.order);
+                            $uibModalInstance.close(data.data);
                         } else {
                             if (typeof data.error === 'object') {
                                 $scope.formErrors = data.error;
                             } else {
-                                growl.addErrorMessage('Nie udało się dodać protokołu zwrotu !');
+                                growl.addErrorMessage('Nie udało się dodać zwrotu pieniędzy !');
                             }
                         }
                     }).
@@ -279,7 +235,6 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
             dateDisabled: false,
             formatYear: 'yy',
             startingDay: 1,
-            startDate: new Date()
         };
 
         $scope.startDate = function () {

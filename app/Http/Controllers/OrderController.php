@@ -59,6 +59,11 @@ class OrderController extends Controller {
                                 ->get()->toArray();
                 $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
+            if (!empty($find['document'])) {
+                $array = OrderProduct::select('order_id')->whereRaw('LOWER(document_number) LIKE ?', ['%' . strtolower($find['document']) . '%'])
+                                ->get()->toArray();
+                $data = $data->whereIn('id', array_column($array, 'order_id'));
+            }
             if (!empty($find['date'])) {
                 $data = $data->whereBetween('created_at', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
             }

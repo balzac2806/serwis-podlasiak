@@ -24,6 +24,9 @@
         <li ng-if="permissions.user.role != 'viewer'" class="sidebar-list">
             <a ui-sref="correctionsList" ng-class="{ 'actives': isActive($state, 'correctionsList')}">Poprawki<span class="menu-icon fa fa-bookmark"></span></a>
         </li>
+        <li ng-if="permissions.user.role != 'viewer'" class="sidebar-list">
+            <a ui-sref="moneyReturns" ng-class="{ 'actives': isActive($state, 'moneyReturns')}">Zwroty Pieniędzy<span class="menu-icon fa fa-map-marker"></span></a>
+        </li>
         <!--- ADMIN MENU -->
         <li ng-show="permissions.user.role == 'admin'" ng-click="adminMenu()" class="sidebar-list">
             <a><strong>Administracja </strong><span class="menu-icon fa fa-gears"></span></a>

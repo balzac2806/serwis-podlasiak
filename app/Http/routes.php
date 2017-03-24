@@ -34,6 +34,13 @@ Route::get('api/product/', 'ProductController@create');
 Route::get('api/product/{id}/', 'ProductController@show');
 Route::delete('api/product/{id}/', 'ProductController@destroy');
 
+// Zwroty Pieniędzy
+Route::post('api/money-returns/', 'MoneyReturnController@store');
+Route::put('api/money-returns/{id}/', 'MoneyReturnController@store');
+Route::get('api/money-returns/', 'MoneyReturnController@create');
+Route::get('api/money-returns/{id}/', 'MoneyReturnController@show');
+Route::delete('api/money-returns/{id}/', 'MoneyReturnController@destroy');
+
 // Dostawy 
 Route::post('api/provider/', 'ProviderController@store');
 Route::put('api/provider/{id}/', 'ProviderController@store');
