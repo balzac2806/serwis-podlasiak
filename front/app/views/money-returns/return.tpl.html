@@ -32,6 +32,10 @@
                                 </p>
                                 <label ng-show="formErrors.date" class="alert alert-danger">Pole data jest wymagane!</label>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label" for="time">Godzina</label>
+                                <div uib-timepicker ng-model="moneyReturn.time" hour-step="1" minute-step="5" show-meridian="false"></div>
+                            </div>
                         </div>
                     </fieldset>
                 </form>

@@ -78,6 +78,8 @@ class MoneyReturnController extends Controller {
         
         if (!empty($input['date'])) {
             $input['date'] = $value = date('Y-m-d', strtotime($input['date']));
+        }  else {
+            $input['date'] = date('Y-m-d');
         }
         
         $data = MoneyReturn::createOrUpdate($input, $id);

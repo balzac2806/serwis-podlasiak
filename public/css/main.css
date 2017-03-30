@@ -193,6 +193,8 @@ td, th {
     .print-release {
         display: block !important;
         text-align: center;
+        font-size: 18px;
+        margin-bottom: 8px;
     }
 }
 @font-face {

@@ -16,7 +16,8 @@ class MoneyReturn extends Authenticatable {
         'person',
         'subiect',
         'cost',
-        'date'
+        'date',
+        'time'
     ];
 
     /**
@@ -30,6 +31,13 @@ class MoneyReturn extends Authenticatable {
         if (!empty($value)) {
             $value = date('Y-m-d', strtotime($value));
         }
+        return $value;
+    }
+    
+     public function getTimeAttribute($value) {
+        if (!empty($value)) {
+            $value = date('Y-m-d H:m', strtotime($value));
+        } 
         return $value;
     }
 

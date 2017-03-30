@@ -131,6 +131,7 @@ interMap.controller('moneyReturnPageController', ['$scope', '$stateParams', '$ro
         $scope.isLoading = true;
 
         $scope.moneyReturn = {};
+        $scope.moneyReturn.time = new Date();
 
         var url = '/api/money-returns/';
 
@@ -143,6 +144,7 @@ interMap.controller('moneyReturnPageController', ['$scope', '$stateParams', '$ro
                             $scope.moneyReturn = response.data.data;
                             if (angular.isDefined($scope.moneyReturn.date)) {
                                 $scope.moneyReturn.date = new Date($scope.moneyReturn.date);
+                                $scope.moneyReturn.time = new Date($scope.moneyReturn.time);
                             } else {
                                 $scope.moneyReturn.date = new Date();
                             }
@@ -196,12 +198,13 @@ interMap.controller('moneyReturnPageController', ['$scope', '$stateParams', '$ro
 interMap.controller('moneyReturnModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'moneyReturn', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, moneyReturn, $uibModalInstance) {
 
         $scope.moneyReturn = {};
-
+        $scope.moneyReturn.time = new Date();
         $scope.moneyReturn.person = $rootScope.permissions.user.name;
 
         if (angular.isDefined(moneyReturn.subiect)) {
             $scope.returnId = moneyReturn.id;
             $scope.moneyReturn = moneyReturn;
+            $scope.moneyReturn.time = new Date($scope.moneyReturn.time);
         }
 
         var url = '/api/money-returns/';

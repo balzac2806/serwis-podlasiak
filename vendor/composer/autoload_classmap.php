@@ -525,6 +525,7 @@ return array(
     'UpdateOrderProductsTableAddColumnDateNumberDocument' => $baseDir . '/database/migrations/2016_10_16_134716_update_order_products_table_add_column_date_number_document.php',
     'UpdateOrderProductsTableChangeStatusToNullable' => $baseDir . '/database/migrations/2016_11_19_212536_update_order_products_table_change_status_to_nullable.php',
     'UpdateProductsTableAddSubiectColumn' => $baseDir . '/database/migrations/2017_02_09_095311_update_products_table_add_subiect_column.php',
+    'UpdateTableMoneyReturnsAddTime' => $baseDir . '/database/migrations/2017_03_30_220029_update_table_money_returns_add_time.php',
     'UpdateTableOrdersAddColumnCompany' => $baseDir . '/database/migrations/2016_10_18_200849_update_table_orders_add_column_company.php',
     'UpdateUsersTableDefaultRoleViewer' => $baseDir . '/database/migrations/2016_10_18_185826_update_users_table_default_role_viewer.php',
     'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
