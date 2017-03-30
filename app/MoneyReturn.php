@@ -36,7 +36,7 @@ class MoneyReturn extends Authenticatable {
     
      public function getTimeAttribute($value) {
         if (!empty($value)) {
-            $value = date('Y-m-d H:i:s', strtotime('+1 hour',strtotime($value)));
+            $value = date('Y-m-d H:i:s', strtotime('+2 hours',strtotime($value)));
         } 
         return $value;
     }
