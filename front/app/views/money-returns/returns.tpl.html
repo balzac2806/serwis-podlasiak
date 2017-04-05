@@ -2,31 +2,31 @@
     <div class="panel-body">
         <form name="searchForm">
             <fieldset>
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-group activites-select">
-                        <label for="person">Kto</label>
-                        <input type="text" name="person" class="form-control" ng-model="search.person" required/>
+                <div class="col-md-12">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group activites-select">
+                            <label for="person">Kto</label>
+                            <input type="text" name="person" class="form-control" ng-model="search.person" required/>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-group activites-select">
-                        <label for="subiect">Komu</label>
-                        <input type="text" name="subiect" class="form-control" ng-model="search.subiect" required/>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group activites-select">
+                            <label for="subiect">Komu</label>
+                            <input type="text" name="subiect" class="form-control" ng-model="search.subiect" required/>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-group activites-select">
-                        <label for="person">Data</label>
-                        <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="search.date" 
-                                   is-open="popup" datepicker-options="dateOptions" show-button-bar="false" />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default button-picker" ng-click="startDate()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
-                        </p>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group activites-select">
+                            <label for="person">Data</label>
+                            <p class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="search.date" 
+                                       is-open="popup" datepicker-options="dateOptions" show-button-bar="false" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default button-picker" ng-click="startDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label>&nbsp;</label>
@@ -36,6 +36,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group activites-select">
+                            <label for="cost">Koszt</label>
+                            <input type="text" class="form-control" ng-model="search.cost" />
+                        </div>
+                    </div>
+                </div>
             </fieldset>
         </form>
     </div>
@@ -68,7 +77,7 @@
                             <span ng-show="sortType == 'subiect' && sortReverse" class="fa fa-caret-up"></span>
                         </span>
                     </th>
-                     <th>
+                    <th>
                         <span ng-click="sortType = 'cost';
                             sortReverse = !sortReverse">
                             Ile
@@ -82,6 +91,11 @@
                             Data
                             <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
+                        </span>
+                    </th>
+                    <th>
+                        <span>
+                            Godzina
                         </span>
                     </th>
                     <th ng-if="permissions.user.role != 'user' && permissions.user.role != 'viewer'" class="text-center col-md-2">
@@ -103,6 +117,9 @@
                     <td>
                         {{val.date|| '-'}}
                     </td>
+                    <td>
+                        {{val.hour}}
+                    </td>
                     <td ng-if="permissions.user.role != 'user'">
                         <span ng-if="permissions.user.role == 'admin'" ng-really-header="Usuń" ng-really-message="Czy na pewno chcesz usunąć zwrot?" ng-really-click="removeMoneyReturn(val.id)" ng-click="remove()" style="float: right" class="btn btn-link btn-sm">
                             <button class="btn btn-danger btn-addon btn-actions"><i class="fa fa-times"></i> Usuń</button>
@@ -113,7 +130,7 @@
                     </td>
                 </tr>
                 <tr ng-if="moneyReturns.length == 0">
-                    <td colspan="5" class="text-center">
+                    <td colspan="6" class="text-center">
                         <h3>Brak Wyników !</h3>
                     </td>
                 </tr>

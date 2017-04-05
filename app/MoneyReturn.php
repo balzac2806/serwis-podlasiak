@@ -26,18 +26,25 @@ class MoneyReturn extends Authenticatable {
      * @var array
      */
     protected $hidden = [];
-    
+
     public function getDateAttribute($value) {
         if (!empty($value)) {
             $value = date('Y-m-d', strtotime($value));
         }
         return $value;
     }
-    
-     public function getTimeAttribute($value) {
+
+    public function getTimeAttribute($value) {
         if (!empty($value)) {
-            $value = date('Y-m-d H:i:s', strtotime('+2 hours',strtotime($value)));
-        } 
+            $value = date('Y-m-d H:i:s', strtotime('+2 hours', strtotime($value)));
+        }
+        return $value;
+    }
+
+    public function getHourAttribute($value) {
+        if (!empty($value)) {
+            $value = date('H:i', strtotime('+2 hours', strtotime($value)));
+        }
         return $value;
     }
 
@@ -53,7 +60,9 @@ class MoneyReturn extends Authenticatable {
      * @param int $id
      */
     public static function findById($id) {
-        $query = self::where('id', '=', $id);
+        $query = self::where('id', ' =
+
+         ', $id);
 
         return $query->first();
     }

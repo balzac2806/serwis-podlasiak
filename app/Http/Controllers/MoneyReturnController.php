@@ -25,13 +25,16 @@ class MoneyReturnController extends Controller {
             $find = json_decode($input['find'], true);
         }
         $success = true;
-        $data = MoneyReturn::select('*');
+        $data = MoneyReturn::select('id','person', 'subiect', 'cost', 'date', 'time as hour', 'created_at', 'updated_at');
         if (!empty($find)) {
             if (!empty($find['person'])) {
                 $data = $data->whereRaw('LOWER(person) LIKE ?', ['%' . strtolower($find['person']) . '%']);
             }
             if (!empty($find['subiect'])) {
                 $data = $data->whereRaw('LOWER(subiect) LIKE ?', ['%' . strtolower($find['subiect']) . '%']);
+            }
+            if (!empty($find['cost'])) {
+                $data = $data->whereRaw('LOWER(cost) LIKE ?', ['%' . strtolower($find['cost']) . '%']);
             }
             if (!empty($find['date'])) {
                 $data = $data->whereBetween('date', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));

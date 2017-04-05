@@ -46,6 +46,7 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             delete $scope.search.person;
             delete $scope.search.subiect;
             delete $scope.search.date;
+            delete $scope.search.cost;
             $scope.search = {};
             $scope.getMoneyReturns($scope.sort)
                     .then(function (response) {
@@ -59,6 +60,7 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             $scope.check = false;
             if (angular.isDefined($scope.search.subiect)
                     || angular.isDefined($scope.search.person)
+                    || angular.isDefined($scope.search.cost)
                     || angular.isDefined($scope.search.date)) {
                 $scope.check = true;
             } else {
