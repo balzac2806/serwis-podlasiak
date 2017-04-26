@@ -32,7 +32,7 @@ class ProviderController extends Controller {
         $data = Provider::select('*');
         if (!empty($find)) {
             if (!empty($find['name'])) {
-                $data = $data->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($find['name']) . '%']);
+                $data = $data->whereRaw('LOWER(name) LIKE ?', ['%' . mb_strtolower($find['name'],'UTF-8') . '%']);
             }
             if (!empty($find['date'])) {
                 $data = $data->whereBetween('date', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));

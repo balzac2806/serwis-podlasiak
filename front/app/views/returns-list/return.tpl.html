@@ -17,9 +17,14 @@
                                 <label ng-show="formErrors.checker" class="alert alert-danger">Pole osoba sprawdzająca jest wymagane!</label>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="authoriser">Osoba Zatwierdzająca</label>
+                                <label class="control-label" for="authoriser">Osoba zatwierdzająca</label>
                                 <input class="form-control" disabled name="authoriser" type="text" ng-model="order.authoriser"/>
                                 <label ng-show="formErrors.authoriser" class="alert alert-danger">Pole osoba zatwierdzająca jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="editor">Ostatnio edytowany przez</label>
+                                <input class="form-control" disabled name="editor" type="text" ng-model="order.editor"/>
+                                <label ng-show="formErrors.editor" class="alert alert-danger">Pole osoba zatwierdzająca jest wymagane!</label>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="company">Firma</label>

@@ -10,7 +10,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             'niezrealizowane',
             'zrealizowane'
         ];
-        
+
         $scope.search = {};
         $scope.companies = ['Podlasiak', 'Fonti', 'Wszystkie'];
         $scope.search.company = $scope.companies[2];
@@ -200,6 +200,7 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
 
         $scope.saveOrder = function () {
             $scope.isLoading = true;
+            $scope.order.editor = $rootScope.permissions.user.name;
             $http.put(url + $scope.order.id, $scope.order).
                     success(function (data) {
                         if (data.success) {

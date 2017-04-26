@@ -19,6 +19,7 @@ class Correction extends Authenticatable {
         'status',
         'updated_at',
         'created_at',
+        'adder'
     ];
 
     /**

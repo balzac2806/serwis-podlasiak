@@ -29,10 +29,10 @@ class ProductController extends Controller {
         $data = Product::select('*');
         if (!empty($find)) {
             if (!empty($find['name'])) {
-                $data = $data->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($find['name']) . '%']);
+                $data = $data->whereRaw('LOWER(name) LIKE ?', ['%' . mb_strtolower($find['name'],'UTF-8') . '%']);
             }
             if (!empty($find['person'])) {
-                $data = $data->whereRaw('LOWER(person) LIKE ?', ['%' . strtolower($find['person']) . '%']);
+                $data = $data->whereRaw('LOWER(person) LIKE ?', ['%' . mb_strtolower($find['person'],'UTF-8') . '%']);
             }
             if (!empty($find['date'])) {
                 $data = $data->whereBetween('created_at', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));

@@ -26,6 +26,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="adder">Dodał</label>
+                                <input class="form-control" disabled name="adder" type="text" ng-model="correction.adder"/>
+                                <label ng-show="formErrors.adder" class="alert alert-danger">Pole osoba zatwierdzająca jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label" for="status">Status</label>
                                 <select class="form-control" placeholder="-- Wybierz --" ng-options="status as status.name for status in statuses" ng-model="correction.status">
                                 </select>

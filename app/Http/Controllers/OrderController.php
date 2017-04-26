@@ -42,7 +42,7 @@ class OrderController extends Controller {
         $data = Order::select('*');
         if (!empty($find)) {
             if (!empty($find['name'])) {
-                $array = OrderProduct::select('order_id')->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($find['name']) . '%'])
+                $array = OrderProduct::select('order_id')->whereRaw('LOWER(name) LIKE ?', ['%' . mb_strtolower($find['name'],'UTF-8') . '%'])
                                 ->get()->toArray();
                 $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
@@ -50,17 +50,17 @@ class OrderController extends Controller {
                 $data = $data->whereRaw('LOWER(issuer) LIKE ?', ['%' . strtolower($find['person']) . '%']);
             }
             if (!empty($find['sender'])) {
-                $array = OrderProduct::select('order_id')->whereRaw('LOWER(sender) LIKE ?', ['%' . strtolower($find['sender']) . '%'])
+                $array = OrderProduct::select('order_id')->whereRaw('LOWER(sender) LIKE ?', ['%' . mb_strtolower($find['sender'],'UTF-8'). '%'])
                                 ->get()->toArray();
                 $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
             if (!empty($find['number'])) {
-                $array = OrderProduct::select('order_id')->whereRaw('LOWER(number) LIKE ?', ['%' . strtolower($find['number']) . '%'])
+                $array = OrderProduct::select('order_id')->whereRaw('LOWER(number) LIKE ?', ['%' . mb_strtolower($find['number'],'UTF-8') . '%'])
                                 ->get()->toArray();
                 $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
             if (!empty($find['document'])) {
-                $array = OrderProduct::select('order_id')->whereRaw('LOWER(document_number) LIKE ?', ['%' . strtolower($find['document']) . '%'])
+                $array = OrderProduct::select('order_id')->whereRaw('LOWER(document_number) LIKE ?', ['%' . mb_strtolower($find['document'],'UTF-8') . '%'])
                                 ->get()->toArray();
                 $data = $data->whereIn('id', array_column($array, 'order_id'));
             }
@@ -68,7 +68,7 @@ class OrderController extends Controller {
                 $data = $data->whereBetween('created_at', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
             }
             if (!empty($find['company']) && $find['company'] != 'Wszystkie') {
-                $data = $data->whereRaw('LOWER(company) LIKE ?', ['%' . strtolower($find['company']) . '%']);
+                $data = $data->whereRaw('LOWER(company) LIKE ?', ['%' . mb_strtolower($find['company'],'UTF-8') . '%']);
             }
         }
         $data = $data->orderBy('id', 'desc')->get()->toArray();

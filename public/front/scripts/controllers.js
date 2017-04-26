@@ -525,7 +525,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             'niezrealizowane',
             'zrealizowane'
         ];
-        
+
         $scope.search = {};
         $scope.companies = ['Podlasiak', 'Fonti', 'Wszystkie'];
         $scope.search.company = $scope.companies[2];
@@ -715,6 +715,7 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
 
         $scope.saveOrder = function () {
             $scope.isLoading = true;
+            $scope.order.editor = $rootScope.permissions.user.name;
             $http.put(url + $scope.order.id, $scope.order).
                     success(function (data) {
                         if (data.success) {
@@ -1172,7 +1173,7 @@ interMap.controller('correctionPageController', ['$scope', '$stateParams', '$roo
                         $scope.isLoading = false;
                     });
         };
-        
+
     }]);
 
 interMap.controller('correctionModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'correction', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, product, $uibModalInstance) {
@@ -1196,6 +1197,7 @@ interMap.controller('correctionModalController', ['$scope', '$stateParams', '$ro
 
         $scope.save = function () {
             $scope.isLoading = true;
+            $scope.correction.adder = $rootScope.permissions.user.name;
             $http.post(url, $scope.correction).
                     success(function (data) {
                         if (data.success) {

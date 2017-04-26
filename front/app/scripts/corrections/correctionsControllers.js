@@ -187,7 +187,7 @@ interMap.controller('correctionPageController', ['$scope', '$stateParams', '$roo
                         $scope.isLoading = false;
                     });
         };
-        
+
     }]);
 
 interMap.controller('correctionModalController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', 'correction', '$uibModalInstance', function ($scope, $stateParams, $rootScope, $http, $state, growl, product, $uibModalInstance) {
@@ -211,6 +211,7 @@ interMap.controller('correctionModalController', ['$scope', '$stateParams', '$ro
 
         $scope.save = function () {
             $scope.isLoading = true;
+            $scope.correction.adder = $rootScope.permissions.user.name;
             $http.post(url, $scope.correction).
                     success(function (data) {
                         if (data.success) {
