@@ -111,6 +111,7 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
 
         $scope.saveProduct = function () {
             $scope.isLoading = true;
+            $scope.product.editor = $rootScope.permissions.user.name;
             $http.put(url + $scope.product.id, $scope.product).
                     success(function (data) {
                         if (data.success) {

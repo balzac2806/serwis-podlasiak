@@ -40,6 +40,11 @@
                                 <label ng-show="formErrors.document_number" class="alert alert-danger">Pole numer dokumentu jest wymagane!</label>
                             </div>
                             <div class="form-group">
+                                <label class="control-label" for="editor">Ostatnio edytowany przez</label>
+                                <input class="form-control" disabled name="editor" type="text" ng-model="product.editor"/>
+                                <label ng-show="formErrors.editor" class="alert alert-danger">Pole osoba zatwierdzająca jest wymagane!</label>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label" for="date">Data</label>
                                 <p class="input-group">
                                     <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="product.date" 

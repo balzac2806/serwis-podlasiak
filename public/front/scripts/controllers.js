@@ -284,7 +284,7 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             formatYear: 'yy',
             startingDay: 1,
         };
-        
+
         $rootScope.showButtonBar = false;
 
 
@@ -301,7 +301,7 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
         $scope.searchProducts = function (search) {
             var find = angular.copy(search);
-            if(angular.isDefined(find.date)) {
+            if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
             $scope.getProducts($scope.sort, find)
@@ -444,6 +444,7 @@ interMap.controller('productPageController', ['$scope', '$stateParams', '$rootSc
 
         $scope.saveProduct = function () {
             $scope.isLoading = true;
+            $scope.product.editor = $rootScope.permissions.user.name;
             $http.put(url + $scope.product.id, $scope.product).
                     success(function (data) {
                         if (data.success) {
@@ -916,6 +917,7 @@ interMap.controller('orderProductPageController', ['$scope', '$stateParams', '$r
 
         $scope.saveProduct = function () {
             $scope.isLoading = true;
+            $scope.product.editor = $rootScope.permissions.user.name;
             $http.put(url + $scope.product.id, $scope.product).
                     success(function (data) {
                         if (data.success) {

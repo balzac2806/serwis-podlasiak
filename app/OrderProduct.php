@@ -22,6 +22,7 @@ class OrderProduct extends Authenticatable {
         'updated_at',
         'document_number',
         'date',
+        'editor'
     ];
     /**
      * The attributes that should be hidden for arrays.

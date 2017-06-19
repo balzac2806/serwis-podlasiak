@@ -60,9 +60,7 @@ class MoneyReturn extends Authenticatable {
      * @param int $id
      */
     public static function findById($id) {
-        $query = self::where('id', ' =
-
-         ', $id);
+        $query = self::where('id', '=', $id);
 
         return $query->first();
     }

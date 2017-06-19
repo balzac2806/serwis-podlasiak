@@ -17,7 +17,8 @@ class Product extends Authenticatable {
         'person',
         'status',
         'subiect',
-        'updated_at'
+        'updated_at',
+        'editor'
     ];
 
     /**
