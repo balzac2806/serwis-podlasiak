@@ -1756,9 +1756,17 @@ interMap.controller('codeGeneratorController', ['$scope', '$http',
         $scope.draft = {
             product_name: '',
             product_description: '',
+            product_description_two: '',
+            product_description_three: '',
             product_image_first: '',
             product_image_second: '',
-            product_image_third: ''
+            product_image_third: '',
+            product_image_four: '',
+            product_image_five: '',
+            product_image_six: '',
+            product_image_seven: '',
+            product_image_eight: '',
+            product_image_nine: ''
         };
 
         $scope.getCodeGeneratorData()
