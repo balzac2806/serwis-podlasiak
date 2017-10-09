@@ -109,6 +109,12 @@ interMap.config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: "front/views/returns-list/order/product.tpl.html",
                     controller: 'orderProductPageController',
                 })
+                // Lista - Zwroty
+                .state('codeGenerator', {
+                    url: "/generator/code",
+                    templateUrl: "front/views/code-generator/index.tpl.html",
+                    controller: 'codeGeneratorController',
+                })
                 // Użytkownicy - Administracja
                 .state('users', {
                     url: "/users",

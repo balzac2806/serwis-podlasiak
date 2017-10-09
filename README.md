@@ -1,7 +1,7 @@
 # InterMap
 
 ## 1) Get The Repository
-git clone git@github.com:balzac2806/intermap.git
+git clone git@github.com:balzac2806/serwis-podlasiak.git
 
 ## 2) Build
 - Start in console:

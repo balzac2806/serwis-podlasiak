@@ -41,6 +41,9 @@ Route::get('api/money-returns/', 'MoneyReturnController@create');
 Route::get('api/money-returns/{id}/', 'MoneyReturnController@show');
 Route::delete('api/money-returns/{id}/', 'MoneyReturnController@destroy');
 
+// Cdde Generator
+Route::get('api/code-generator/', 'CodeGeneratorController@index');
+
 // Dostawy 
 Route::post('api/provider/', 'ProviderController@store');
 Route::put('api/provider/{id}/', 'ProviderController@store');
