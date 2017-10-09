@@ -120,35 +120,19 @@ class CodeGenerator extends Authenticatable {
                     <img src="https://www.tutumi.pl/szablon_ebay_nowy/eng/eu-homestyle.jpg" style="max-width: 100%; height: auto;" alt="eu-homestyle">
                 </div>
                 <div class="content">
-                    <!-- TREŚĆ AUKCJI OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-                    <h1>[product_name]</h1>
-                    <p>[product_description]</p>
-                    <!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-                    <!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-                    <img src="[product_image_first]"><br>
-                    <img src="[product_image_second]"><br>
-                    <img src="[product_image_third]"><br>
-                    <!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-                    
+<h1>[product_name]</h1>
+<p>[product_description]</p>
+<img src="[product_image_first]"><br>
+<img src="[product_image_second]"><br>
+<img src="[product_image_third]"><br>
 <p>[product_description_two]</p>
-<!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-<!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
 <img src="[product_image_four]"><br>
 <img src="[product_image_five]"><br>
 <img src="[product_image_six]"><br>
-<!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-                    
 <p>[product_description_three]</p>
-<!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-<!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
 <img src="[product_image_seven]"><br>
 <img src="[product_image_eight]"><br>
 <img src="[product_image_nine]"><br>
-<!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
                 </div>
                 <div class="footer">
                     <div class="footer-row">
@@ -261,26 +245,19 @@ class CodeGenerator extends Authenticatable {
 
 <div class="content">
 
-<!-- TREŚĆ AUKCJI OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
-                    <h1>[product_name]</h1>
-
-                    <p>[product_description]</p>
-
-
-
-                    <!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-                    <!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
-                    <img src="[product_image_first]"><br>
-                    <img src="[product_image_second]"><br>
-                    <img src="[product_image_third]"><br>
-
-
-                    <!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+<h1>[product_name]</h1>
+<p>[product_description]</p>
+<img src="[product_image_first]"><br>
+<img src="[product_image_second]"><br>
+<img src="[product_image_third]"><br>
+<p>[product_description_two]</p>
+<img src="[product_image_four]"><br>
+<img src="[product_image_five]"><br>
+<img src="[product_image_six]"><br>
+<p>[product_description_three]</p>
+<img src="[product_image_seven]"><br>
+<img src="[product_image_eight]"><br>
+<img src="[product_image_nine]"><br>
 
 </div>
 
@@ -449,26 +426,19 @@ Frais de livraison en France, Luxembourg et Belgique sont <b>gratuit</b>. Nous t
 
 <div class="content">
 
-<!-- TREŚĆ AUKCJI OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
 <h1>[product_name]</h1>
-
 <p>[product_description]</p>
-
-
-
-<!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-<!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
 <img src="[product_image_first]"><br>
 <img src="[product_image_second]"><br>
 <img src="[product_image_third]"><br>
-
-
-<!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+<p>[product_description_two]</p>
+<img src="[product_image_four]"><br>
+<img src="[product_image_five]"><br>
+<img src="[product_image_six]"><br>
+<p>[product_description_three]</p>
+<img src="[product_image_seven]"><br>
+<img src="[product_image_eight]"><br>
+<img src="[product_image_nine]"><br>
 
 </div>
 
@@ -635,51 +605,30 @@ Lieferungszeit dauert 3-5 Arbeitstagen (nach Deutschland). Wir schicken die Ware
 
 </center>
 </p>
-
 </div>
-
 <div class="header">
-
 <img src="https://www.tutumi.pl/szablon_ebay_nowy/it/eu-homestyle.jpg" style="max-width: 100%; height: auto;" alt="eu-homestyle">
-
 </div>
-
 <div class="content">
-
-<!-- TREŚĆ AUKCJI OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
 <h1>[product_name]</h1>
-
 <p>[product_description]</p>
-
-
-
-<!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-<!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
 <img src="[product_image_first]"><br>
 <img src="[product_image_second]"><br>
 <img src="[product_image_third]"><br>
-
-
-<!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
+<p>[product_description_two]</p>
+<img src="[product_image_four]"><br>
+<img src="[product_image_five]"><br>
+<img src="[product_image_six]"><br>
+<p>[product_description_three]</p>
+<img src="[product_image_seven]"><br>
+<img src="[product_image_eight]"><br>
+<img src="[product_image_nine]"><br>
 </div>
-
 <div class="footer">
-
 <div class="footer-row">
-
 <div class="footer-6 footer-6-first">
-
 <h2>Pagamenti accettati</h2>
-
 <hr>
-
-
 <table cellspacing="20">
 <tr>
 <td width="140"><img style="max-width: 100%; height: auto;" src="https://www.tutumi.pl/szablon_ebay_nowy/it/paypal.png" class="img-table" alt=""></td><td><p></p></td>
