@@ -9,7 +9,7 @@
                             <option ng-repeat="template in templates" value="{{template.key}}">{{template.value}}</option>
                         </select>
                     </div>
-                    <div ng-if="selectedTemplate" class="form-group" ng-repeat="element in template_elements[selectedTemplate]| orderBy: 'order'">
+                    <div ng-if="selectedTemplate" class="form-group" ng-repeat="element in template_elements[selectedTemplate] | orderBy: 'order'">
                         <label for="{{element.key}}">{{ element.label}} <span ng-if="element.required" class="required">*</span></label>
                         <input ng-if="element.type === 'input'" type="text" class="form-control" id="{{element.key}}" name="{{element.key}}" ng-model="draft[element.key]" ng-pattern="element.pattern" placeholder="{{element.placeholder}}" ng-disabled="(toDisable(element.disable))">
                     </div>
@@ -18,36 +18,36 @@
                     </div>
                 </div>
                 <div class="col-md-9" ng-if="selectedTemplate">
-                    <div style="all: unset;">
-                        <div ng-bind-html="template_htmls[selectedTemplate]" style="width: 100%; height: 500px; overflow: auto; border: solid 3px #30426a;"></div>
-                    </div>
+                    <textarea ng-model="template_htmls[selectedTemplate]" class="col-md-12" rows="60"></textarea>
                 </div>
             </div>
         </div>
         <div class="row" ng-if="selectedTemplate">
             <div class="col-md-12">
-<!--                <div class="col-md-3">
-                    Shortcode'y<hr/>
-                    <table class="table table-hover" ng-if="!isLoading">
-                        <thead>
-                            <tr>
-                                <th>Nazwa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="(key, val) in shortcodes">
-                                <td></td>
-                            </tr>
-                            <tr ng-if="shortcodes.length == 0">
-                                <td colspan="1" class="text-center">
-                                    <h3>Brak Wyników !</h3>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>-->
+                <!--                <div class="col-md-3">
+                                    Shortcode'y<hr/>
+                                    <table class="table table-hover" ng-if="!isLoading">
+                                        <thead>
+                                            <tr>
+                                                <th>Nazwa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="(key, val) in shortcodes">
+                                                <td></td>
+                                            </tr>
+                                            <tr ng-if="shortcodes.length == 0">
+                                                <td colspan="1" class="text-center">
+                                                    <h3>Brak Wyników !</h3>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>-->
                 <div class="col-md-12">
-                    <textarea ng-model="template_htmls[selectedTemplate]" class="col-md-12" rows="20"></textarea>
+                    <div style="all: unset;">
+                        <div ng-bind-html="template_htmls[selectedTemplate]" style="width: 100%; height: 500px; overflow: auto; border: solid 3px #30426a;"></div>
+                    </div>
                 </div>
             </div>
         </div>

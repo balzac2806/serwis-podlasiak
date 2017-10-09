@@ -26,7 +26,6 @@ class CodeGenerator extends Authenticatable {
     CONST FR_TEMPLATE = 2;
     CONST GER_TEMPLATE = 3;
     CONST IT_TEMPLATE = 4;
-    
 
     public static $templates = [
             ['key' => self::ENG_TEMPLATE, 'value' => 'Anglia'],
@@ -37,31 +36,63 @@ class CodeGenerator extends Authenticatable {
     public static $templatesElements = [
         self::ENG_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
-                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
+                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu I', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
                 ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
                 ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
                 ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
+                ['order' => 5, 'key' => 'product_description_two', 'label' => 'Opis produktu II', 'type' => 'input', 'shortcode' => '<p>[product_description_two]</p>'],
+                ['order' => 6, 'key' => 'product_image_four', 'label' => 'Grafika produktu IV', 'type' => 'input', 'shortcode' => '<img src="[product_image_four]"><br>'],
+                ['order' => 7, 'key' => 'product_image_five', 'label' => 'Grafika produktu V', 'type' => 'input', 'shortcode' => '<img src="[product_image_five]"><br>'],
+                ['order' => 8, 'key' => 'product_image_six', 'label' => 'Grafika produktu VI', 'type' => 'input', 'shortcode' => '<img src="[product_image_six]"><br>'],
+                ['order' => 9, 'key' => 'product_description_three', 'label' => 'Opis produktu III', 'type' => 'input', 'shortcode' => '<p>[product_description_three]</p>'],
+                ['order' => 10, 'key' => 'product_image_seven', 'label' => 'Grafika produktu VII', 'type' => 'input', 'shortcode' => '<img src="[product_image_seven]"><br>'],
+                ['order' => 11, 'key' => 'product_image_eight', 'label' => 'Grafika produktu VIII', 'type' => 'input', 'shortcode' => '<img src="[product_image_eight]"><br>'],
+                ['order' => 12, 'key' => 'product_image_nine', 'label' => 'Grafika produktu IX', 'type' => 'input', 'shortcode' => '<img src="[product_image_nine]"><br>'],
         ],
         self::FR_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
-                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
+                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu I', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
                 ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
                 ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
                 ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
+                ['order' => 5, 'key' => 'product_description_two', 'label' => 'Opis produktu II', 'type' => 'input', 'shortcode' => '<p>[product_description_two]</p>'],
+                ['order' => 6, 'key' => 'product_image_four', 'label' => 'Grafika produktu IV', 'type' => 'input', 'shortcode' => '<img src="[product_image_four]"><br>'],
+                ['order' => 7, 'key' => 'product_image_five', 'label' => 'Grafika produktu V', 'type' => 'input', 'shortcode' => '<img src="[product_image_five]"><br>'],
+                ['order' => 8, 'key' => 'product_image_six', 'label' => 'Grafika produktu VI', 'type' => 'input', 'shortcode' => '<img src="[product_image_six]"><br>'],
+                ['order' => 9, 'key' => 'product_description_three', 'label' => 'Opis produktu III', 'type' => 'input', 'shortcode' => '<p>[product_description_three]</p>'],
+                ['order' => 10, 'key' => 'product_image_seven', 'label' => 'Grafika produktu VII', 'type' => 'input', 'shortcode' => '<img src="[product_image_seven]"><br>'],
+                ['order' => 11, 'key' => 'product_image_eight', 'label' => 'Grafika produktu VIII', 'type' => 'input', 'shortcode' => '<img src="[product_image_eight]"><br>'],
+                ['order' => 12, 'key' => 'product_image_nine', 'label' => 'Grafika produktu IX', 'type' => 'input', 'shortcode' => '<img src="[product_image_nine]"><br>'],
         ],
         self::GER_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
-                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
+                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu I', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
                 ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
                 ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
                 ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
+                ['order' => 5, 'key' => 'product_description_two', 'label' => 'Opis produktu II', 'type' => 'input', 'shortcode' => '<p>[product_description_two]</p>'],
+                ['order' => 6, 'key' => 'product_image_four', 'label' => 'Grafika produktu IV', 'type' => 'input', 'shortcode' => '<img src="[product_image_four]"><br>'],
+                ['order' => 7, 'key' => 'product_image_five', 'label' => 'Grafika produktu V', 'type' => 'input', 'shortcode' => '<img src="[product_image_five]"><br>'],
+                ['order' => 8, 'key' => 'product_image_six', 'label' => 'Grafika produktu VI', 'type' => 'input', 'shortcode' => '<img src="[product_image_six]"><br>'],
+                ['order' => 9, 'key' => 'product_description_three', 'label' => 'Opis produktu III', 'type' => 'input', 'shortcode' => '<p>[product_description_three]</p>'],
+                ['order' => 10, 'key' => 'product_image_seven', 'label' => 'Grafika produktu VII', 'type' => 'input', 'shortcode' => '<img src="[product_image_seven]"><br>'],
+                ['order' => 11, 'key' => 'product_image_eight', 'label' => 'Grafika produktu VIII', 'type' => 'input', 'shortcode' => '<img src="[product_image_eight]"><br>'],
+                ['order' => 12, 'key' => 'product_image_nine', 'label' => 'Grafika produktu IX', 'type' => 'input', 'shortcode' => '<img src="[product_image_nine]"><br>'],
         ],
         self::IT_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
-                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
+                ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu I', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
                 ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
                 ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
                 ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
+                ['order' => 5, 'key' => 'product_description_two', 'label' => 'Opis produktu II', 'type' => 'input', 'shortcode' => '<p>[product_description_two]</p>'],
+                ['order' => 6, 'key' => 'product_image_four', 'label' => 'Grafika produktu IV', 'type' => 'input', 'shortcode' => '<img src="[product_image_four]"><br>'],
+                ['order' => 7, 'key' => 'product_image_five', 'label' => 'Grafika produktu V', 'type' => 'input', 'shortcode' => '<img src="[product_image_five]"><br>'],
+                ['order' => 8, 'key' => 'product_image_six', 'label' => 'Grafika produktu VI', 'type' => 'input', 'shortcode' => '<img src="[product_image_six]"><br>'],
+                ['order' => 9, 'key' => 'product_description_three', 'label' => 'Opis produktu III', 'type' => 'input', 'shortcode' => '<p>[product_description_three]</p>'],
+                ['order' => 10, 'key' => 'product_image_seven', 'label' => 'Grafika produktu VII', 'type' => 'input', 'shortcode' => '<img src="[product_image_seven]"><br>'],
+                ['order' => 11, 'key' => 'product_image_eight', 'label' => 'Grafika produktu VIII', 'type' => 'input', 'shortcode' => '<img src="[product_image_eight]"><br>'],
+                ['order' => 12, 'key' => 'product_image_nine', 'label' => 'Grafika produktu IX', 'type' => 'input', 'shortcode' => '<img src="[product_image_nine]"><br>'],
         ]
     ];
     public static $templatesHtmls = [
@@ -90,25 +121,33 @@ class CodeGenerator extends Authenticatable {
                 </div>
                 <div class="content">
                     <!-- TREŚĆ AUKCJI OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
                     <h1>[product_name]</h1>
-
                     <p>[product_description]</p>
-
-
-
                     <!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
 
                     <!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
-
-
                     <img src="[product_image_first]"><br>
                     <img src="[product_image_second]"><br>
                     <img src="[product_image_third]"><br>
-
-
                     <!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+                    
+<p>[product_description_two]</p>
+<!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+
+<!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+<img src="[product_image_four]"><br>
+<img src="[product_image_five]"><br>
+<img src="[product_image_six]"><br>
+<!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+                    
+<p>[product_description_three]</p>
+<!-- TREŚĆ AUKCJI DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+
+<!-- ZDJĘCIA OD TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
+<img src="[product_image_seven]"><br>
+<img src="[product_image_eight]"><br>
+<img src="[product_image_nine]"><br>
+<!-- ZDJĘCIA DO TEGO MIEJSCA ===== NIE USUWAĆ ====== -->
 
                 </div>
                 <div class="footer">
