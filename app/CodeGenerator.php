@@ -38,30 +38,30 @@ class CodeGenerator extends Authenticatable {
         self::ENG_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
                 ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
-                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]">'],
-                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]">'],
-                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]">'],
+                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
+                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
+                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
         ],
         self::FR_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
                 ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
-                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]">'],
-                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]">'],
-                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]">'],
+                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
+                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
+                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
         ],
         self::GER_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
                 ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
-                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]">'],
-                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]">'],
-                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]">'],
+                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
+                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
+                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
         ],
         self::IT_TEMPLATE => [
                 ['order' => 0, 'key' => 'product_name', 'label' => 'Nazwa produktu', 'type' => 'input', 'shortcode' => '<h1>[product_name]</h1>'],
                 ['order' => 1, 'key' => 'product_description', 'label' => 'Opis produktu', 'type' => 'input', 'shortcode' => '<p>[product_description]</p>'],
-                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]">'],
-                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]">'],
-                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]">'],
+                ['order' => 2, 'key' => 'product_image_first', 'label' => 'Grafika produktu I', 'type' => 'input', 'shortcode' => '<img src="[product_image_first]"><br>'],
+                ['order' => 3, 'key' => 'product_image_second', 'label' => 'Grafika produktu II', 'type' => 'input', 'shortcode' => '<img src="[product_image_second]"><br>'],
+                ['order' => 4, 'key' => 'product_image_third', 'label' => 'Grafika produktu III', 'type' => 'input', 'shortcode' => '<img src="[product_image_third]"><br>'],
         ]
     ];
     public static $templatesHtmls = [
@@ -674,92 +674,54 @@ KONTONUMMER: 1000/00003778</td>
 </div>
 
 <div class="footer-row">
-
 <h2>Sicurezza</h2>
-
 <hr>
-
 <div class="footer-row centered">
-
 <div class="footer-4">
-
 <img src="https://www.tutumi.pl/szablon_ebay_nowy/it/open.png" style="height: 122px; width: auto;" alt="">
 <br><br>
 <h3>Facile contatto</h3>
 <br>
-
 <p>Per qualsiasi problema non esitateci a contattarci. Dal Lunedi al Venerdi  7-15:00.</p>
-
 </div>
-
 <div class="footer-4">
-
 <img src="https://www.tutumi.pl/szablon_ebay_nowy/it/yes.png" style="height: 122px; width: auto;" alt="">
 <br><br>
 <h3>Soddisfazione</h3>
 <br>
-
 <p>La vostra soddisfazione viene al primo posto. </p>
-
 </div>
-
 <div class="footer-4">
-
 <img src="https://www.tutumi.pl/szablon_ebay_nowy/it/help.png" style="height: 122px; width: auto;" alt="">
 <br><br>
 <h3>Ti aiuteremò</h3>
 <br>
-
 <p>Siamo sempre pronti ad aiutarvi.</p>
-
 </div>
-
 <br><br>
-
 <p>Se non Vi piace o non siete sodisfatti del Vostro aquisto, potete tranquillamente cambiarlo o restituirlo.</p>
-
 </div>
-
 </div>
-
 <div class="footer-row">
-
 <h2>Soddisfazione</h2>
-
 <hr>
-
 <img src="https://www.tutumi.pl/szablon_ebay_nowy/it/satisfaction.png" alt="satisfaction" align="left" style="margin-right: 20px;">
-
 <p>La qualità dei nostri prodotti si posiziona ai vertici delle rispettive categorie e le modalità di stoccaggio, imballaggio e di spedizione sono state studiate per garantirne la conservazione nel tempo. Premesso ciò tutti i nostri Clienti godono del diritto di recesso, esercitabile senza alcuna penalità, di recedere dal contratto secondo la previsioone dall\'art. 64 del D.lgs 206/2005; ciò permette di restituire il prodotto, previa comunicazione nel termine di 10 giorni dal ricevimento dello stesso ottenendone la sostituzione con un altro prodotto o il rimborso del corrispettivo pagato.</p>
-
 </div>
-
 <div class="footer-row">
-
 <h2>Imballo & Spedizione</h2>
-
 <hr>
-
 <p style="font-weight: 900; font-size: 20px">Consegna a domicilio entro 4 - 6 giorni lavorativi</p>
-
 <p>Facciamo il possibile affinché la merce arrivi integra! I nostri prodotti vengono accuratamente imballati. I pacchetti sono consegnati Lunedi - Venerdi. La consegna in Italia. Non è possibile avere una consegna per appuntamento ( l’ora e il giorno di consegna non dipende da noi).
 <br>Vi preghiamo di apprire il pacco davanti al corriere. Se hai ricevuto un prodotto difettoso o danneggiato contattaci per aiuto durante una settimana.</p>
-
 <br>
-
 <p style="font-weight: 900; font-size: 24px; border: 3px solid #21c178; padding: 20px; text-align: center; line-height: 30px;"><i>Per la Sardegna il costo di spedizione è più alto. Per le spese di spedizione in Sardegna e altri paesi d\'Europea, non esitate a contattarci.<br></i></p>
 <br>
-
 <span style="text-align:center"><img src="https://www.tutumi.pl/szablon_ebay_nowy/it/spedycja.jpg" class="img100p" alt=""></span>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </body>
 </html>
 '

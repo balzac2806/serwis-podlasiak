@@ -13,7 +13,7 @@
                         <label for="{{element.key}}">{{ element.label}} <span ng-if="element.required" class="required">*</span></label>
                         <input ng-if="element.type === 'input'" type="text" class="form-control" id="{{element.key}}" name="{{element.key}}" ng-model="draft[element.key]" ng-pattern="element.pattern" placeholder="{{element.placeholder}}" ng-disabled="(toDisable(element.disable))">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-if="selectedTemplate">
                         <button class="btn btn-primary" ng-click="generate(draft, selectedTemplate)">Generuj</button>
                     </div>
                 </div>
