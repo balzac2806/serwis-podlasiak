@@ -53,7 +53,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             delete $scope.search.number;
             delete $scope.search.document;
             $scope.search = {};
-            $scope.search.company = $scope.companies[2];
+            $scope.search.company = $scope.companies[5];
             $scope.getOrders($scope.sort)
                     .then(function (response) {
                         if (response.data.success) {
@@ -153,7 +153,9 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
         $scope.companies = [
             'Podlasiak',
             'Fonti',
-            'Kandi'
+            'Kandi',
+            'Kamparo',
+            'Admix'
         ];
 
         $scope.isLoading = true;
