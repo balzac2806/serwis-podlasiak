@@ -12,8 +12,8 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
         ];
 
         $scope.search = {};
-        $scope.companies = ['Podlasiak', 'Fonti', ,'Kandi', 'Wszystkie'];
-        $scope.search.company = $scope.companies[3];
+        $scope.companies = ['Podlasiak', 'Fonti', 'Kandi', 'Kamparo', 'Admix', 'Wszystkie'];
+        $scope.search.company = $scope.companies[5];
 
         $scope.popup = false;
 
@@ -241,7 +241,9 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
         $scope.companies = [
             'Podlasiak',
             'Fonti',
-            'Kandi'
+            'Kandi',
+            'Kamparo',
+            'Admix'
         ];
 
         if (angular.isDefined(order.name)) {
