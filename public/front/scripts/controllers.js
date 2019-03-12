@@ -528,8 +528,8 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
         ];
 
         $scope.search = {};
-        $scope.companies = ['Podlasiak', 'Fonti', 'Kandi', 'Kamparo', 'Admix', 'Wszystkie'];
-        $scope.search.company = $scope.companies[5];
+        $scope.companies = ['Podlasiak', 'Fonti', 'Kandi', 'Kamparo', 'Admix', 'Stahurt', 'Wszystkie'];
+        $scope.search.company = $scope.companies[6];
 
         $scope.popup = false;
 
@@ -569,7 +569,7 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             delete $scope.search.number;
             delete $scope.search.document;
             $scope.search = {};
-            $scope.search.company = $scope.companies[5];
+            $scope.search.company = $scope.companies[6];
             $scope.getOrders($scope.sort)
                     .then(function (response) {
                         if (response.data.success) {
@@ -671,7 +671,8 @@ interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootSco
             'Fonti',
             'Kandi',
             'Kamparo',
-            'Admix'
+            'Admix',
+            'Stahurt'
         ];
 
         $scope.isLoading = true;
@@ -761,7 +762,8 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
             'Fonti',
             'Kandi',
             'Kamparo',
-            'Admix'
+            'Admix',
+            'Stahurt'
         ];
 
         if (angular.isDefined(order.name)) {
