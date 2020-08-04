@@ -1,5 +1,8 @@
 interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -16,8 +19,8 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
         };
 
 
-        $scope.getCorrections = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getCorrections = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -27,25 +30,32 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getCorrections($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.corrections = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getCorrections(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.corrections = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.clearSearch = function () {
             delete $scope.search.name;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getCorrections($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.corrections = response.data.data;
-                        }
-                    });
+            $scope.getCorrections(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.corrections = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -58,13 +68,16 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
             }
         }, true);
 
-        $scope.getCorrections()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.corrections = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getCorrections($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.corrections = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addCorrection = function () {
             var modalInstance = $uibModal.open({
@@ -87,12 +100,15 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getCorrections(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.corrections = response.data.data;
-                            }
-                        });
+                $scope.getCorrections(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.corrections = response.data.data.data;
+                        }
+                    });
             }
         });
 
@@ -112,6 +128,17 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
                     });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getCorrections($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.corrections = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('correctionPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {

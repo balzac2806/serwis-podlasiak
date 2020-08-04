@@ -38,7 +38,7 @@ class ProviderController extends Controller {
                 $data = $data->whereBetween('date', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
             }
         }
-        $data = $data->orderBy('id', 'desc')->get()->toArray();
+        $data = $data->orderBy('id', 'desc')->paginate(100);
 
         return Response::json(compact('success', 'data'));
     }

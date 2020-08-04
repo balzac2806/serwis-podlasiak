@@ -38,30 +38,7 @@ class ProductController extends Controller {
                 $data = $data->whereBetween('created_at', array($find['date'] . ' 00:00:00', $find['date'] . ' 23:59:59'));
             }
         }
-        $data = $data->get()->toArray();
-
-        $sortArray = array();
-
-        foreach ($data as $product) {
-            foreach ($product as $key => $value) {
-                if (!isset($sortArray[$key])) {
-                    $sortArray[$key] = array();
-                }
-                $sortArray[$key][] = $value;
-            }
-        }
-
-        if (!empty($data)) {
-            if (!empty($input['sort']) && !empty($data)) {
-                $sort = ($input['sort'] == 'name') ? SORT_ASC : SORT_DESC;
-                $orderby = $input['sort'];
-                array_multisort($sortArray[$orderby], $sort, $data);
-            } else {
-                $sort = SORT_ASC;
-                $orderby = 'name';
-                array_multisort($sortArray[$orderby], $sort, $data);
-            }
-        }
+        $data = $data->orderBy('id','desc')->paginate(100);
 
         return Response::json(compact('success', 'data'));
     }

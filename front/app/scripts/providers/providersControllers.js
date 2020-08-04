@@ -1,5 +1,8 @@
 interMap.controller('providersListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -27,8 +30,8 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
         };
 
 
-        $scope.getProviders = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getProviders = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -38,25 +41,32 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getProviders($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.providers = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getProviders(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.providers = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.clearSearch = function () {
             delete $scope.search.name;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getProviders($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.providers = response.data.data;
-                        }
-                    });
+            $scope.getProviders(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.providers = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -69,13 +79,16 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
             }
         }, true);
 
-        $scope.getProviders()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.providers = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getProviders($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.providers = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addProvider = function () {
             var modalInstance = $uibModal.open({
@@ -98,12 +111,15 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getProviders(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.providers = response.data.data;
-                            }
-                        });
+                $scope.getProviders(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.providers = response.data.data.data;
+                        }
+                    });
             }
         });
 
@@ -123,6 +139,17 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
                     });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getProviders($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.providers = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('providerPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {

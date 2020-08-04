@@ -1,5 +1,8 @@
 interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -22,8 +25,8 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
         };
 
 
-        $scope.getMoneyReturns = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getMoneyReturns = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -33,13 +36,16 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getMoneyReturns($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.moneyReturns = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getMoneyReturns(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.moneyReturns = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.clearSearch = function () {
@@ -48,12 +54,16 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             delete $scope.search.date;
             delete $scope.search.cost;
             $scope.search = {};
-            $scope.getMoneyReturns($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.moneyReturns = response.data.data;
-                        }
-                    });
+            $scope.getMoneyReturns(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.moneyReturns = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -68,13 +78,17 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             }
         }, true);
 
-        $scope.getMoneyReturns()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.moneyReturns = response.data.data;
-                        $scope.sort = 'updated_at';
-                    }
-                });
+        $scope.getMoneyReturns($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.moneyReturns = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
+
 
         $scope.addMoneyReturn = function () {
             var modalInstance = $uibModal.open({
@@ -97,12 +111,15 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getMoneyReturns(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.moneyReturns = response.data.data;
-                            }
-                        });
+                $scope.getMoneyReturns(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.moneyReturns = response.data.data.data;
+                        }
+                    });
             }
         });
 
@@ -122,6 +139,17 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
                     });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getMoneyReturns($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.moneyReturns = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('moneyReturnPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {

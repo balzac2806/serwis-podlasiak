@@ -1,5 +1,8 @@
 interMap.controller('productsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -21,14 +24,8 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
         $rootScope.showButtonBar = false;
 
-
-        $scope.startDate = function () {
-            $scope.popup = true;
-        };
-
-
-        $scope.getProducts = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getProducts = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -38,13 +35,20 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getProducts($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.products = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getProducts(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.products = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
         $scope.clearSearch = function () {
@@ -52,12 +56,15 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             delete $scope.search.person;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getProducts($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.products = response.data.data;
-                        }
-                    });
+            $scope.getProducts(1, $scope.sort)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.products = response.data.data.data;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -71,13 +78,16 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             }
         }, true);
 
-        $scope.getProducts()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.products = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getProducts($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.products = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addProduct = function () {
             var modalInstance = $uibModal.open({
@@ -86,8 +96,7 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
                 controller: 'productModalController',
                 resolve: {
                     product: function () {
-                        return {
-                        };
+                        return {};
                     }
                 }
             });
@@ -96,6 +105,18 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
                 $state.go($state.current, {}, {reload: true});
                 growl.addSuccessMessage('Produkt został dodany pomyślnie !');
             });
+        };
+
+        $scope.pageChanged = function () {
+            $scope.getProducts($scope.currentPage, $scope.sort)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.products = response.data.data.data;
+                    }
+                });
         };
 
         $scope.$watch('sort', function (newVal, oldVal) {
@@ -124,7 +145,6 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
                         }
                     });
         };
-
     }]);
 
 interMap.controller('productPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {

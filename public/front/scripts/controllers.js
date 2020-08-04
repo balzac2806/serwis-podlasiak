@@ -266,6 +266,9 @@ interMap.controller('userController', ['$scope', '$stateParams', '$rootScope', '
 
 interMap.controller('productsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -287,14 +290,8 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
 
         $rootScope.showButtonBar = false;
 
-
-        $scope.startDate = function () {
-            $scope.popup = true;
-        };
-
-
-        $scope.getProducts = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getProducts = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -304,13 +301,20 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getProducts($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.products = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getProducts(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.products = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
         $scope.clearSearch = function () {
@@ -318,12 +322,15 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             delete $scope.search.person;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getProducts($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.products = response.data.data;
-                        }
-                    });
+            $scope.getProducts(1, $scope.sort)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.products = response.data.data.data;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -337,13 +344,16 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
             }
         }, true);
 
-        $scope.getProducts()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.products = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getProducts($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.products = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addProduct = function () {
             var modalInstance = $uibModal.open({
@@ -352,8 +362,7 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
                 controller: 'productModalController',
                 resolve: {
                     product: function () {
-                        return {
-                        };
+                        return {};
                     }
                 }
             });
@@ -362,6 +371,18 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
                 $state.go($state.current, {}, {reload: true});
                 growl.addSuccessMessage('Produkt został dodany pomyślnie !');
             });
+        };
+
+        $scope.pageChanged = function () {
+            $scope.getProducts($scope.currentPage, $scope.sort)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.products = response.data.data.data;
+                    }
+                });
         };
 
         $scope.$watch('sort', function (newVal, oldVal) {
@@ -390,7 +411,6 @@ interMap.controller('productsListController', ['$scope', '$rootScope', '$http', 
                         }
                     });
         };
-
     }]);
 
 interMap.controller('productPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
@@ -516,6 +536,9 @@ interMap.controller('productModalController', ['$scope', '$stateParams', '$rootS
     }]);
 interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'id';
         $scope.sortReverse = true;
@@ -539,12 +562,8 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             startingDay: 1,
         };
 
-        $scope.startDate = function () {
-            $scope.popup = true;
-        };
-
-        $scope.getOrders = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getOrders = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.searchOrders = function (search) {
@@ -552,13 +571,20 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getOrders($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.returners = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getOrders(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.returners = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
         $scope.clearSearch = function () {
@@ -569,37 +595,43 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             delete $scope.search.number;
             delete $scope.search.document;
             $scope.search = {};
-            $scope.search.company = $scope.companies[6];
+            $scope.search.company = $scope.companies[5];
             $scope.getOrders($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.returners = response.data.data;
-                        }
-                    });
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.returners = response.data.data.data;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
             $scope.check = false;
             if (angular.isDefined($scope.search.name)
-                    || angular.isDefined($scope.search.person)
-                    || angular.isDefined($scope.search.sender)
-                    || angular.isDefined($scope.search.number)
-                    || angular.isDefined($scope.search.company)
-                    || angular.isDefined($scope.search.document)
-                    || angular.isDefined($scope.search.date)) {
+                || angular.isDefined($scope.search.person)
+                || angular.isDefined($scope.search.sender)
+                || angular.isDefined($scope.search.number)
+                || angular.isDefined($scope.search.company)
+                || angular.isDefined($scope.search.document)
+                || angular.isDefined($scope.search.date)) {
                 $scope.check = true;
             } else {
                 $scope.check = false;
             }
         }, true);
 
-        $scope.getOrders()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.returners = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getOrders($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.returners = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addOrder = function () {
             var modalInstance = $uibModal.open({
@@ -622,31 +654,45 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getOrders(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.returners = response.data.data;
-                            }
-                        });
+                $scope.getOrders(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.returners = response.data.data.data;
+                        }
+                    });
             }
         });
 
         $scope.removeOrder = function (id) {
-            $http.delete(url + id).
-                    success(function (data) {
-                        if (data.success) {
-                            angular.forEach($scope.returners, function (val, key) {
-                                if (val.id == id) {
-                                    $scope.returners.splice(key, 1);
-                                }
-                            });
-                            growl.addSuccessMessage('Protokół zwrotu został usunięty !');
-                        } else if (data.error) {
-                            growl.addErrorMessage(data.error);
+            $http.delete(url + '/' + id).
+            success(function (data) {
+                if (data.success) {
+                    angular.forEach($scope.returners, function (val, key) {
+                        if (val.id == id) {
+                            $scope.returners.splice(key, 1);
                         }
                     });
+                    growl.addSuccessMessage('Protokół zwrotu został usunięty!');
+                } else if (data.error) {
+                    growl.addErrorMessage(data.error);
+                }
+            });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getOrders($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.returners = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
@@ -812,6 +858,7 @@ interMap.controller('returnModalController', ['$scope', '$stateParams', '$rootSc
         };
 
     }]);
+
 interMap.controller('orderProductsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter', '$stateParams',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter, $stateParams) {
 
@@ -996,6 +1043,9 @@ interMap.controller('orderProductModalController', ['$scope', '$stateParams', '$
     }]);
 interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -1012,8 +1062,8 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
         };
 
 
-        $scope.getCorrections = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getCorrections = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -1023,25 +1073,32 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getCorrections($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.corrections = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getCorrections(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.corrections = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.clearSearch = function () {
             delete $scope.search.name;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getCorrections($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.corrections = response.data.data;
-                        }
-                    });
+            $scope.getCorrections(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.corrections = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -1054,13 +1111,16 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
             }
         }, true);
 
-        $scope.getCorrections()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.corrections = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getCorrections($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.corrections = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addCorrection = function () {
             var modalInstance = $uibModal.open({
@@ -1083,12 +1143,15 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getCorrections(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.corrections = response.data.data;
-                            }
-                        });
+                $scope.getCorrections(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.corrections = response.data.data.data;
+                        }
+                    });
             }
         });
 
@@ -1108,6 +1171,17 @@ interMap.controller('correctionsListController', ['$scope', '$rootScope', '$http
                     });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getCorrections($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.corrections = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('correctionPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
@@ -1232,6 +1306,9 @@ interMap.controller('correctionModalController', ['$scope', '$stateParams', '$ro
     }]);
 interMap.controller('providersListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -1259,8 +1336,8 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
         };
 
 
-        $scope.getProviders = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getProviders = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -1270,25 +1347,32 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getProviders($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.providers = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getProviders(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.providers = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.clearSearch = function () {
             delete $scope.search.name;
             delete $scope.search.date;
             $scope.search = {};
-            $scope.getProviders($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.providers = response.data.data;
-                        }
-                    });
+            $scope.getProviders(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.providers = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -1301,13 +1385,16 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
             }
         }, true);
 
-        $scope.getProviders()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.providers = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getProviders($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.providers = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addProvider = function () {
             var modalInstance = $uibModal.open({
@@ -1330,12 +1417,15 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getProviders(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.providers = response.data.data;
-                            }
-                        });
+                $scope.getProviders(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.providers = response.data.data.data;
+                        }
+                    });
             }
         });
 
@@ -1355,6 +1445,17 @@ interMap.controller('providersListController', ['$scope', '$rootScope', '$http',
                     });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getProviders($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.providers = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('providerPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {
@@ -1430,7 +1531,7 @@ interMap.controller('providerPageController', ['$scope', '$stateParams', '$rootS
                         $scope.isLoading = false;
                     });
         };
-
+        
         $scope.popup = false;
 
         $scope.dateOptions = {
@@ -1487,7 +1588,7 @@ interMap.controller('providerModalController', ['$scope', '$stateParams', '$root
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
-
+        
         $scope.popup = false;
 
         $scope.dateOptions = {
@@ -1504,6 +1605,9 @@ interMap.controller('providerModalController', ['$scope', '$stateParams', '$root
     }]);
 interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'created_at';
         $scope.sortReverse = true;
@@ -1526,8 +1630,8 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
         };
 
 
-        $scope.getMoneyReturns = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getMoneyReturns = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.search = {};
@@ -1537,13 +1641,16 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getMoneyReturns($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.moneyReturns = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getMoneyReturns(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.moneyReturns = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.clearSearch = function () {
@@ -1552,12 +1659,16 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             delete $scope.search.date;
             delete $scope.search.cost;
             $scope.search = {};
-            $scope.getMoneyReturns($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.moneyReturns = response.data.data;
-                        }
-                    });
+            $scope.getMoneyReturns(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.moneyReturns = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
@@ -1572,13 +1683,17 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
             }
         }, true);
 
-        $scope.getMoneyReturns()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.moneyReturns = response.data.data;
-                        $scope.sort = 'updated_at';
-                    }
-                });
+        $scope.getMoneyReturns($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.moneyReturns = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
+
 
         $scope.addMoneyReturn = function () {
             var modalInstance = $uibModal.open({
@@ -1601,12 +1716,15 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getMoneyReturns(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.moneyReturns = response.data.data;
-                            }
-                        });
+                $scope.getMoneyReturns(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.moneyReturns = response.data.data.data;
+                        }
+                    });
             }
         });
 
@@ -1626,6 +1744,17 @@ interMap.controller('moneyReturnsListController', ['$scope', '$rootScope', '$htt
                     });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getMoneyReturns($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.moneyReturns = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('moneyReturnPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {

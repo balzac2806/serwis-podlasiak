@@ -1,5 +1,8 @@
 interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '$state', 'growl', '$uibModal', '$filter',
     function ($scope, $rootScope, $http, $state, growl, $uibModal, $filter) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 100;
+        $scope.totalData = 100;
 
         $scope.sortType = 'id';
         $scope.sortReverse = true;
@@ -23,12 +26,8 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             startingDay: 1,
         };
 
-        $scope.startDate = function () {
-            $scope.popup = true;
-        };
-
-        $scope.getOrders = function (sortParam, findParams) {
-            return $http.get(url, {params: {sort: sortParam, find: findParams}});
+        $scope.getOrders = function (page, sortParam, findParams) {
+            return $http.get(url, {params: {page: page, sort: sortParam, find: findParams}});
         };
 
         $scope.searchOrders = function (search) {
@@ -36,13 +35,20 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             if (angular.isDefined(find.date)) {
                 find.date = $filter('date')(find.date, 'yyyy-MM-dd');
             }
-            $scope.getOrders($scope.sort, find)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.returners = response.data.data;
-                            $scope.isFind = false;
-                        }
-                    });
+            $scope.getOrders(1, $scope.sort, find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.returners = response.data.data.data;
+                        $scope.isFind = false;
+                    }
+                });
+        };
+
+        $scope.startDate = function () {
+            $scope.popup = true;
         };
 
         $scope.clearSearch = function () {
@@ -55,35 +61,41 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
             $scope.search = {};
             $scope.search.company = $scope.companies[5];
             $scope.getOrders($scope.sort)
-                    .then(function (response) {
-                        if (response.data.success) {
-                            $scope.returners = response.data.data;
-                        }
-                    });
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.returners = response.data.data.data;
+                    }
+                });
         };
 
         $scope.$watch('search', function (newValue, oldValue) {
             $scope.check = false;
             if (angular.isDefined($scope.search.name)
-                    || angular.isDefined($scope.search.person)
-                    || angular.isDefined($scope.search.sender)
-                    || angular.isDefined($scope.search.number)
-                    || angular.isDefined($scope.search.company)
-                    || angular.isDefined($scope.search.document)
-                    || angular.isDefined($scope.search.date)) {
+                || angular.isDefined($scope.search.person)
+                || angular.isDefined($scope.search.sender)
+                || angular.isDefined($scope.search.number)
+                || angular.isDefined($scope.search.company)
+                || angular.isDefined($scope.search.document)
+                || angular.isDefined($scope.search.date)) {
                 $scope.check = true;
             } else {
                 $scope.check = false;
             }
         }, true);
 
-        $scope.getOrders()
-                .then(function (response) {
-                    if (response.data.success) {
-                        $scope.returners = response.data.data;
-                        $scope.sort = 'name';
-                    }
-                });
+        $scope.getOrders($scope.currentPage)
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.lastPage = response.data.data.last_page;
+                    $scope.currentPage = response.data.data.current_page;
+                    $scope.totalData = response.data.data.total;
+                    $scope.returners = response.data.data.data;
+                    $scope.sort = 'name';
+                }
+            });
 
         $scope.addOrder = function () {
             var modalInstance = $uibModal.open({
@@ -106,31 +118,45 @@ interMap.controller('returnsListController', ['$scope', '$rootScope', '$http', '
 
         $scope.$watch('sort', function (newVal, oldVal) {
             if (angular.isDefined(oldVal) && angular.isDefined(newVal) && newVal != oldVal) {
-                $scope.getOrders(newVal)
-                        .then(function (response) {
-                            if (response.data.success) {
-                                $scope.returners = response.data.data;
-                            }
-                        });
+                $scope.getOrders(1, newVal, $scope.find)
+                    .then(function (response) {
+                        if (response.data.success) {
+                            $scope.lastPage = response.data.data.last_page;
+                            $scope.currentPage = response.data.data.current_page;
+                            $scope.totalData = response.data.data.total;
+                            $scope.returners = response.data.data.data;
+                        }
+                    });
             }
         });
 
         $scope.removeOrder = function (id) {
-            $http.delete(url + id).
-                    success(function (data) {
-                        if (data.success) {
-                            angular.forEach($scope.returners, function (val, key) {
-                                if (val.id == id) {
-                                    $scope.returners.splice(key, 1);
-                                }
-                            });
-                            growl.addSuccessMessage('Protokół zwrotu został usunięty !');
-                        } else if (data.error) {
-                            growl.addErrorMessage(data.error);
+            $http.delete(url + '/' + id).
+            success(function (data) {
+                if (data.success) {
+                    angular.forEach($scope.returners, function (val, key) {
+                        if (val.id == id) {
+                            $scope.returners.splice(key, 1);
                         }
                     });
+                    growl.addSuccessMessage('Protokół zwrotu został usunięty!');
+                } else if (data.error) {
+                    growl.addErrorMessage(data.error);
+                }
+            });
         };
 
+        $scope.pageChanged = function() {
+            $scope.getOrders($scope.currentPage, $scope.sort, $scope.find)
+                .then(function (response) {
+                    if (response.data.success) {
+                        $scope.lastPage = response.data.data.last_page;
+                        $scope.currentPage = response.data.data.current_page;
+                        $scope.totalData = response.data.data.total;
+                        $scope.returners = response.data.data.data;
+                    }
+                });
+        };
     }]);
 
 interMap.controller('returnPageController', ['$scope', '$stateParams', '$rootScope', '$http', '$state', 'growl', '$uibModal', function ($scope, $stateParams, $rootScope, $http, $state, growl, $uibModal) {

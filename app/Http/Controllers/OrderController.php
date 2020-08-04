@@ -71,17 +71,18 @@ class OrderController extends Controller {
                 $data = $data->whereRaw('LOWER(company) LIKE ?', ['%' . mb_strtolower($find['company'],'UTF-8') . '%']);
             }
         }
-        $data = $data->orderBy('id', 'desc')->get()->toArray();
-
-        $orderIds = array_column($data, 'id');
+        $data = $data->orderBy('id', 'desc')->paginate(100);
+        $data = $data->toArray();
+        $orderIds = array_column($data['data'], 'id');
         $orders = OrderProduct::select(DB::raw('distinct(order_id)'))
                         ->where('date', '=', null)
-                        ->orWhere('document_number', '=', null)->get()->toArray();
+                        ->orWhere('document_number', '=', null)
+                        ->get()->toArray();
         foreach ($orderIds as $key => $val) {
             if (in_array($val, array_column($orders, 'order_id'))) {
-                $data[$key]['status'] = 1;
+                $data['data'][$key]['status'] = 1;
             } else {
-                $data[$key]['status'] = 2;
+                $data['data'][$key]['status'] = 2;
             }
         }
 
